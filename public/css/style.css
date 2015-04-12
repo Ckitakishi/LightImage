@@ -1,0 +1,22 @@
+/*base*/
+body {
+  background-color: #ace9ce;
+}
+section {
+  padding: 1em;
+}
+a {
+  text-decoration: none;
+}
+
+/*other*/
+.photo,
+.paint {
+  display: block;
+  width: 20%;
+  margin: 1em auto;
+  padding: 1em;
+  border: 1px solid white;
+  color: green;
+  text-align: center;
+}
