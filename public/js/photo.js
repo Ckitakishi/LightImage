@@ -1,46 +1,41 @@
-/**
- * Created by chen on 15/04/10.
- */
-window.onload = function() {
-  var canvas = document.getElementById("myCanvas");
-  var image = document.getElementById("imageSource");
+var demo = new Vue({
+  el: '#photo-render',
+  data: {
 
-  // re-size the canvas deminsion
-  canvas.width  = image.width;
-  canvas.height = image.height;
+  },
+  created: function() {
+    console.log("create");
+  },
+  methods: {
+    render: function() {
+      var canvas = document.getElementById("myCanvas");
+      var image = document.getElementById("image-source");
 
-  // get 2D render object
-  var ctx = canvas.getContext("2d");
-  ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-  var canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      canvas.width  = image.width;
+      canvas.height = image.height;
 
-  // gray filter
-  for ( var x = 0; x < canvasData.width; x++) {
-    for ( var y = 0; y < canvasData.height; y++) {
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      var canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-      // Index of the pixel in the array
-      var idx = (x + y * canvasData.width) * 4;
-      var r = canvasData.data[idx + 0];
-      var g = canvasData.data[idx + 1];
-      var b = canvasData.data[idx + 2];
+      for ( var x = 0; x < canvasData.width; x++) {
+        for ( var y = 0; y < canvasData.height; y++) {
 
-      // calculate gray scale value
-      var gray = .299 * r + .587 * g + .114 * b;
+          var idx = (x + y * canvasData.width) * 4;
+          var r = canvasData.data[idx + 0];
+          var g = canvasData.data[idx + 1];
+          var b = canvasData.data[idx + 2];
 
-      // assign gray scale value
-      canvasData.data[idx + 0] = gray; // Red channel
-      canvasData.data[idx + 1] = gray; // Green channel
-      canvasData.data[idx + 2] = gray; // Blue channel
-      canvasData.data[idx + 3] = 255; // Alpha channel
+          var gray = .299 * r + .587 * g + .114 * b;
 
-      //// add black border
-      //if(x < 8 || y < 8 || x > (canvasData.width - 8) || y > (canvasData.height - 8))
-      //{
-      //  canvasData.data[idx + 0] = 0;
-      //  canvasData.data[idx + 1] = 0;
-      //  canvasData.data[idx + 2] = 0;
-      //}
+          canvasData.data[idx + 0] = gray; // Red channel
+          canvasData.data[idx + 1] = gray; // Green channel
+          canvasData.data[idx + 2] = gray; // Blue channel
+          canvasData.data[idx + 3] = 255; // Alpha channel
+
+        }
+      }
+      ctx.putImageData(canvasData, 0, 0); // at coords 0,0
     }
   }
-  ctx.putImageData(canvasData, 0, 0); // at coords 0,0
-};
+});

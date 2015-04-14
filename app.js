@@ -9,6 +9,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.engine('html', require('ejs').renderFile); // .htmlはejsを利用
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname)));
 //app.use(favicon(path.join(__dirname, 'public', 'media', 'images', 'favicon.ico')));
 
 // routers  --write here for a while

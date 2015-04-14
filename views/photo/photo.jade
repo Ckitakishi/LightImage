@@ -3,9 +3,15 @@ html
   head(lang='en')
     meta(charset='UTF-8')
     title Photo
+    script(src='/node_modules/vue/dist/vue.min.js')
+    script(src='/node_modules/jquery/dist/jquery.min.js')
+    script(src='views/components/upload.js')
   body
-    form
-      input(type='file')
-    canvas#myCanvas Sorry
-    img#imageSource(src='images/q.png', alt='pic', width='400px', height='300px')
+    include ../components/upload
+    #photo-render
+      #upload
+        upload-component
+      button(v-on='click: render') render
+      .displaypic
+        canvas#myCanvas Sorry
     script(src='js/photo.js')
