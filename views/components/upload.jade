@@ -1,4 +1,5 @@
 script(type="text/x-template", id="temp-upload")
   form
-    input#upload-file(type='file', v-on='click: uploadFile')
-  img#image-source(src='', alt='pic', width='400px', height='300px')
+    label.upload-label Upload Photo
+      input#upload-file(type='file', v-on='click: uploadFile')
+  img#image-source(src='', alt='pic', v-style='width: width + "px", height: height + "px"')

@@ -1,15 +1,17 @@
 /*base*/
-body {
-  background-color: #ace9ce;
-}
-section {
-  padding: 1em;
-}
 a {
   text-decoration: none;
 }
 
 /*other*/
+body#index {
+  background-color: #ace9ce;
+}
+
+.choices {
+  padding: 1em;
+}
+
 .photo,
 .paint {
   display: block;
@@ -19,4 +21,35 @@ a {
   border: 1px solid white;
   color: green;
   text-align: center;
+}
+
+.upload-label {
+  position: absolute;
+  width: 110px;
+  height: 30px;
+  padding: .5em;
+  border: 1px solid #ababab;
+  line-height: 30px;
+}
+
+#upload-file {
+  opacity: 0;
+}
+
+#photo-render {
+  display: flex;
+}
+
+.displaypic,
+#upload {
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+.displaypic button {
+  display: block;
+  padding: .5em;
+  border: 1px solid #ababab;
+  background-color: white;
+  line-height: 30px;
 }

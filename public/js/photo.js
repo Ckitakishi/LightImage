@@ -1,4 +1,4 @@
-var demo = new Vue({
+new Vue({
   el: '#photo-render',
   data: {
 
