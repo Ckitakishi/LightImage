@@ -36,7 +36,12 @@ body#index {
   opacity: 0;
 }
 
+#image-source {
+  margin-top: 3em;
+}
+
 #photo-render {
+  display: -webkit-flex;
   display: flex;
 }
 
@@ -52,4 +57,5 @@ body#index {
   border: 1px solid #ababab;
   background-color: white;
   line-height: 30px;
+  font-size: 1em;
 }

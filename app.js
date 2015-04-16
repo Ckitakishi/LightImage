@@ -1,7 +1,8 @@
 
 var express = require('express'),
     jade = require('jade'),
-    path = require('path');
+    path = require('path'),
+    favicon = require('serve-favicon');
 
 var app = express();
 
@@ -10,7 +11,7 @@ app.set('view engine', 'jade');
 app.engine('html', require('ejs').renderFile); // .htmlはejsを利用
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname)));
-//app.use(favicon(path.join(__dirname, 'public', 'media', 'images', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 // routers  --write here for a while
 app.get('/', function (req, res) {

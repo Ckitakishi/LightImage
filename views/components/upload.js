@@ -3,10 +3,14 @@ Vue.component('upload-component', {
   data: function () {
     return {
       heigth: 0,
-      width: 0
+      width: 0,
+      imgShow: false
     }
   },
   created: function() {
+
+  },
+  computed: {
 
   },
   methods: {
@@ -29,6 +33,7 @@ Vue.component('upload-component', {
             image.onload = function () {
               self.width = 400;
               self.height = this.height * (this.width/self.width);
+              self.imgShow = true;
             };
           };
 
