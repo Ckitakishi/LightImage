@@ -13,7 +13,8 @@ body#index {
 }
 
 .photo,
-.paint {
+.paint,
+.color {
   display: block;
   width: 20%;
   margin: 1em auto;
@@ -40,7 +41,8 @@ body#index {
   margin-top: 3em;
 }
 
-#photo-render {
+#photo-render,
+#color-analysis {
   display: -webkit-flex;
   display: flex;
 }

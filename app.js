@@ -26,6 +26,10 @@ app.get('/paint', function (req, res) {
   res.render("paint/paint")
 });
 
+app.get('/color', function (req, res) {
+  res.render("color/color")
+});
+
 app.listen(3003, function () {
   console.log('app is listening at port 3003');
 });
