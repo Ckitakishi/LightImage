@@ -31,8 +31,7 @@ Vue.component('upload-component', {
             // 务必为image的src属性赋值；
             image.src = e.target.result;
             image.onload = function () {
-              self.width = 400;
-              self.height = this.height * (this.width/self.width);
+              self.width = 100;
               self.imgShow = true;
             };
           };
