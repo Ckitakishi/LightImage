@@ -7,13 +7,31 @@ new Vue({
     r: 255,
     g: 255,
     b: 255,
-    pixels: []
+    pixels: [],
+    curPixels: [],
+    topWidth: 0
   },
   created: function() {
 
   },
   filters: {
+    sort: function (pixel) {
 
+      function compare(v1, v2) {
+        if (v1.n < v2.n) {
+          return 1;
+        } else if (v1.n > v2.n) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+      pixel.sort(compare);
+      if (pixel.length > 0) {
+        this.topWidth = pixel[0].n / 100;
+      }
+      return pixel;
+    }
   },
   methods: {
     analysis: function() {
@@ -109,6 +127,19 @@ new Vue({
         }
       }
       ctx.putImageData(canvasData, 0, 0); // at coords 0,0
+
+      var curPixel = {};
+      self.curPixels = [];
+      for (i = 0; i < 216; i++) {
+        if (self.pixels[i]) {
+          curPixel = {};
+          curPixel.r = Math.floor((i / 36)) * 51;
+          curPixel.g = Math.floor((i % 36) / 6) * 51;
+          curPixel.b = ((i % 36) % 6) * 51;
+          curPixel.n = self.pixels[i];
+          self.curPixels.push(curPixel);
+        }
+      }
     }
   }
 });

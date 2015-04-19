@@ -88,3 +88,9 @@ body#index {
   width: 2em;
   height: 1em;
 }
+
+.color-strip {
+  height: 1em;
+  margin: .3em;
+  box-sizing: border-box;
+}
