@@ -135,31 +135,24 @@ a {
 #color-analysis {
   display: -webkit-flex;
   display: flex;
+  height: 100%;
 }
 
 #color-analysis #upload {
-  -webkit-flex: 4;
-  flex: 4;
   background-color: #7ac043;
-  -webkit-animation: start .3s;
-  animation: start .4s;
 }
 
-@keyframes start {
-  0% {
-    flex: 6;
-  }
-  100% {
-    flex: 4;
-  }
+.load-enter {
+  width: 100%;
+  -webkit-animation: load-enter 1s;
+  animation: load-enter 1s;
 }
-@-webkit-keyframes start {
-  0% {
-    -webkit-flex: 6;
-  }
-  100% {
-    -webkit-flex: 4;
-  }
+
+.load-leave {
+  -webkit-flex: 4;
+  flex: 4;
+  -webkit-animation: load-leave 1s;
+  animation: load-leave 1s;
 }
 
 .displaycolor {
@@ -197,28 +190,10 @@ a {
 }
 
 #photo #upload {
-  -webkit-flex: 4;
-  flex: 4;
+  /*width: 100%;*/
   background-color: #ffd201;
-  -webkit-animation: start .3s;
-  animation: start .4s;
-}
-
-@keyframes photoLoading {
-  0% {
-    flex: 6;
-  }
-  100% {
-    flex: 4;
-  }
-}
-@-webkit-keyframes photoLoading {
-  0% {
-    -webkit-flex: 6;
-  }
-  100% {
-    -webkit-flex: 4;
-  }
+  /*-webkit-animation: load 1s linear;*/
+  /*animation: load 1s linear;*/
 }
 
 .displayphoto {
@@ -228,3 +203,47 @@ a {
 /*paint*/
 
 /*about*/
+
+/*animation*/
+
+@keyframes load-enter {
+  0% {
+    width: 50%;
+    height: 50%;
+  }
+  100% {
+    width: 100%;
+    height: 100%;
+  }
+}
+@-webkit-keyframes load-enter {
+  0% {
+    width: 50%;
+    height: 50%;
+  }
+  100% {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@keyframes load-leave {
+  0% {
+    -webkit-flex: 6;
+    flex: 6;
+  }
+  100% {
+    -webkit-flex: 4;
+    flex: 4;
+  }
+}
+@-webkit-keyframes load-leave {
+  0% {
+    -webkit-flex: 6;
+    flex: 6;
+  }
+  100% {
+    -webkit-flex: 4;
+    flex: 4;
+  }
+}

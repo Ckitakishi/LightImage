@@ -10,7 +10,7 @@ html
   body
     include components/upload
     #color-analysis
-      #upload
+      #upload(v-class='load-enter: !isLoad, load-leave: isLoad')
         header Color Analysis
         button(v-on='click: analysis') Start Analysis
         upload-component

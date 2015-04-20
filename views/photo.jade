@@ -14,5 +14,6 @@ html
       #upload
         header PHOTO
         upload-component
+        button(v-on='click: analysis') Start Analysis
         canvas#myCanvas(v-show='canvasShow') Sorry
     script(src='js/photo.js')

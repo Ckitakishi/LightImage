@@ -11,6 +11,7 @@ new Vue({
     curPixels: [],
     topWidth: 0,
     canvasShow: false,
+    isLoad: false,
     colorsLen: 0,
     pixelsLen: 0
   },
@@ -58,6 +59,7 @@ new Vue({
 
       this.canvasShow = true;
       this.hasImage = true;
+
       canvas.width  = image.width;
       canvas.height = image.height;
 
@@ -69,7 +71,7 @@ new Vue({
       this.colorInfo(canvas, ctx);
     },
     pixelInfo: function (e) {
-      if (this.hasImage === true) {
+      if (this.hasImage) {
         var x = e.layerX;
         var y = e.layerY;
         var pixel = this.ctx.getImageData(x, y, 1, 1);
@@ -158,6 +160,11 @@ new Vue({
       }
 
       self.colorsLen = self.curPixels.length;
+    }
+  },
+  events: {
+    loaded: function () {
+      this.isLoad = true;
     }
   }
 });

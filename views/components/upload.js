@@ -27,6 +27,7 @@ Vue.component('upload-component', {
             image.onload = function () {
               self.width = 100;
               self.imgShow = true;
+              self.$dispatch("loaded");
             };
           };
 
