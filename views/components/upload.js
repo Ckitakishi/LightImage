@@ -7,12 +7,6 @@ Vue.component('upload-component', {
       imgShow: false
     }
   },
-  created: function() {
-
-  },
-  computed: {
-
-  },
   methods: {
     init: function () {
       this.width = 0;
@@ -43,6 +37,11 @@ Vue.component('upload-component', {
       $("#upload-file").change(function(){
         readURL(this);
       });
+    }
+  },
+  events: {
+    imageHide: function () {
+      this.imgShow = false;
     }
   }
 });

@@ -8,20 +8,19 @@ html
     script(src='/node_modules/jquery/dist/jquery.min.js')
     script(src='views/components/upload.js')
   body
-    include ../components/upload
+    include components/upload
     #color-analysis
       #upload
         header Color Analysis
         button(v-on='click: analysis') Start Analysis
         upload-component
-      .displaypic
-        canvas#myCanvas(v-on='mousemove: pixelInfo($event)') Sorry
+        canvas#myCanvas(v-on='mousemove: pixelInfo($event)', v-show='canvasShow') Sorry
         div
           label.color-block(v-style='background-color: "rgb(" + r + "," + g + "," + b + ")"')
           label(v-text='pixelColor')
-        ul
+      .displaycolor
+        ul.color-frequency
           li(v-repeat='pixel: curPixels | sort') rgb({{pixel.r}},{{pixel.g}},{{pixel.b}}) -- {{pixel.n}}
-            div.color-strip(v-style='' +
-            'background-color: "rgb(" + pixel.r + "," + pixel.g + "," + pixel.b + ")", width: pixel.n/topWidth + "%"')
+            div.color-strip(v-style='background-color: "rgb(" + pixel.r + "," + pixel.g + "," + pixel.b + ")", width: pixel.n/topWidth + "%"')
     //footer @Ckitakishi
     script(src='js/color.js')

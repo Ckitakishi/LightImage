@@ -8,11 +8,11 @@ html
     script(src='/node_modules/jquery/dist/jquery.min.js')
     script(src='views/components/upload.js')
   body
-    include ../components/upload
-    #photo-render
+    include components/upload
+    #photo
+      .displayphoto
       #upload
+        header PHOTO
         upload-component
-      .displaypic
-        button(v-on='click: render') render
-        canvas#myCanvas Sorry
+        canvas#myCanvas(v-show='canvasShow') Sorry
     script(src='js/photo.js')

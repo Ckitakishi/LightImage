@@ -17,12 +17,12 @@
   },
   "homepage": "https://github.com/Ckitakishi/sand-painting",
   "dependencies": {
-    "bower": "^1.4.1",
     "ejs": "^2.3.1",
     "express": "^4.12.3",
     "jade": "^1.9.2",
     "jquery": "^2.1.3",
     "serve-favicon": "^2.2.0",
+    "underscore": "^1.8.3",
     "vue": "^0.11.5"
   }
 }

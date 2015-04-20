@@ -6,7 +6,14 @@ html(lang="en")
     //link(rel="Shortcut Icon",href="/public/images/favicon.ico",type="image/x-icon")
     link(href='css/style.css', rel='stylesheet')
   body#index
-    .choices
-      a(href='/photo', class='photo') PHOTO
-      a(href='/color', class='color') Analysis Color
-      a(href='/paint', class='paint') PAINT
+    .menu
+      a(href='/color', class='color-menu')
+        span ANALYSIS COLOR
+      a(href='/photo', class='photo-menu')
+        span PHOTO
+      a(href='/paint', class='paint-menu')
+        span PAINT
+      a(href='/about', class='about-menu')
+        span ABOUT
+    div.title
+      span 毕业设计题目

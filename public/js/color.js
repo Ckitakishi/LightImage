@@ -9,13 +9,16 @@ new Vue({
     b: 255,
     pixels: [],
     curPixels: [],
-    topWidth: 0
+    topWidth: 0,
+    canvasShow: false,
+    colorsLen: 0,
+    pixelsLen: 0
   },
   created: function() {
 
   },
   filters: {
-    sort: function (pixel) {
+    sort: function (colors) {
 
       function compare(v1, v2) {
         if (v1.n < v2.n) {
@@ -26,11 +29,21 @@ new Vue({
           return 0;
         }
       }
-      pixel.sort(compare);
-      if (pixel.length > 0) {
-        this.topWidth = pixel[0].n / 100;
+      if (colors.length > 0) {
+        colors.sort(compare);
+        this.topWidth = colors[0].n / 100;
+
+        // 排序并显示一部分
+        if (this.colorsLen === colors.length) {
+          var i = 1;
+          while (colors[i].n * 500 > this.pixelsLen) {
+            i++;
+          }
+          colors.splice(i, colors.length - i);
+        }
       }
-      return pixel;
+
+      return colors;
     }
   },
   methods: {
@@ -43,6 +56,7 @@ new Vue({
         return;
       }
 
+      this.canvasShow = true;
       this.hasImage = true;
       canvas.width  = image.width;
       canvas.height = image.height;
@@ -51,6 +65,7 @@ new Vue({
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
       this.ctx = ctx;
 
+      this.$broadcast("imageHide");
       this.colorInfo(canvas, ctx);
     },
     pixelInfo: function (e) {
@@ -83,7 +98,7 @@ new Vue({
       var canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       var data = canvasData.data;
       var r, g, b;
-      var i, j, len;
+      var i, len;
 
       for (i = 0, len = data.length; i < len; i+=4) {
         r = data[i];
@@ -126,6 +141,7 @@ new Vue({
           self.pixels[index] = 1;
         }
       }
+      self.pixelsLen = len/4;
       ctx.putImageData(canvasData, 0, 0); // at coords 0,0
 
       var curPixel = {};
@@ -140,6 +156,8 @@ new Vue({
           self.curPixels.push(curPixel);
         }
       }
+
+      self.colorsLen = self.curPixels.length;
     }
   }
 });

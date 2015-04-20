@@ -19,15 +19,19 @@ app.get('/', function (req, res) {
 });
 
 app.get('/photo', function (req, res) {
-  res.render("photo/photo")
+  res.render("photo")
 });
 
 app.get('/paint', function (req, res) {
-  res.render("paint/paint")
+  res.render("paint")
 });
 
 app.get('/color', function (req, res) {
-  res.render("color/color")
+  res.render("color")
+});
+
+app.get('/about', function (req, res) {
+  res.render("about")
 });
 
 app.listen(3003, function () {
