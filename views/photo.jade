@@ -2,17 +2,18 @@ doctype html
 html
   head(lang='en')
     meta(charset='UTF-8')
-    title ColorAnalysis
+    title Photo
     link(href='css/style.css', rel='stylesheet')
     script(src='/node_modules/vue/dist/vue.min.js')
     script(src='/node_modules/jquery/dist/jquery.min.js')
     script(src='views/components/upload.js')
   body
-    include ../components/upload
-    #color-analysis
+    include components/upload
+    #photo
+      .displayphoto
       #upload
+        header PHOTO
         upload-component
-      .displaypic
-        button(v-on='click: render') render
-        canvas#myCanvas Sorry
-    script(src='js/color.js')
+        button(v-on='click: analysis') Start Analysis
+        canvas#myCanvas(v-show='canvasShow') Sorry
+    script(src='js/photo.js')

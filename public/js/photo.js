@@ -1,5 +1,5 @@
 new Vue({
-  el: '#photo-render',
+  el: '#photo',
   data: {
 
   },

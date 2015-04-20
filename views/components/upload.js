@@ -7,12 +7,6 @@ Vue.component('upload-component', {
       imgShow: false
     }
   },
-  created: function() {
-
-  },
-  computed: {
-
-  },
   methods: {
     init: function () {
       this.width = 0;
@@ -31,9 +25,9 @@ Vue.component('upload-component', {
             // 务必为image的src属性赋值；
             image.src = e.target.result;
             image.onload = function () {
-              self.width = 400;
-              self.height = this.height * (this.width/self.width);
+              self.width = 100;
               self.imgShow = true;
+              self.$dispatch("loaded");
             };
           };
 
@@ -44,6 +38,11 @@ Vue.component('upload-component', {
       $("#upload-file").change(function(){
         readURL(this);
       });
+    }
+  },
+  events: {
+    imageHide: function () {
+      this.imgShow = false;
     }
   }
 });
