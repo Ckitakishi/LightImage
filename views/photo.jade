@@ -5,15 +5,28 @@ html
     title Photo
     link(href='css/style.css', rel='stylesheet')
     script(src='/node_modules/vue/dist/vue.min.js')
-    script(src='/node_modules/jquery/dist/jquery.min.js')
     script(src='views/components/upload.js')
   body
     include components/upload
     #photo
-      .displayphoto
-      #upload
+      .displayphoto(v-show='isLoad')
+        ul
+          li.dir
+            p 滤镜
+            div(v-on='click: gray') gray
+            div(v-on='click: a') a
+            div(v-on='click: b') b
+            div(v-on='click: c') c
+          li.dir
+            p 颜色
+            div(v-on='click: green')
+            div(v-on='click: red')
+          li.dir
+            p 剪裁
+          li.dir
+            p 旋转与对称
+      #upload(v-class='load-enter: !isLoad, load-leave: isLoad')
         header PHOTO
         upload-component
-        button(v-on='click: analysis') Start Analysis
         canvas#myCanvas(v-show='canvasShow') Sorry
     script(src='js/photo.js')

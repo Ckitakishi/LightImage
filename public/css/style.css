@@ -6,6 +6,7 @@ html, body
 
 body {
   margin: 0;
+  font-family: "Lucida Grande", "Helvetica Nueue", Arial, 微软雅黑, 冬青黑体, 宋体, sans-serif;
 }
 
 header {
@@ -13,6 +14,10 @@ header {
   text-align: center;
   font-size: 2em;
   color: white;
+}
+
+ul {
+  padding: 0;
 }
 
 li {
@@ -38,11 +43,13 @@ a {
   opacity: 0;
 }
 
-#upload {
+#upload,
+#paint-tool {
   text-align: center;
 }
 
-#upload button {
+#upload button,
+#paint-tool button {
   display: inline-block;
   padding: .5em;
   margin-bottom: 1em;
@@ -132,7 +139,9 @@ a {
   box-sizing: border-box;
 }
 
-#color-analysis {
+#color-analysis,
+#photo,
+#paint {
   display: -webkit-flex;
   display: flex;
   height: 100%;
@@ -184,28 +193,62 @@ a {
 
 
 /*photo*/
-#photo {
-  display: -webkit-flex;
-  display: flex;
-}
-
 #photo #upload {
-  /*width: 100%;*/
   background-color: #ffd201;
-  /*-webkit-animation: load 1s linear;*/
-  /*animation: load 1s linear;*/
+  /*-webkit-flex: 4;*/
+  /*flex: 4;*/
 }
 
 .displayphoto {
   -webkit-flex: 6;
   flex: 6;
+  padding: 1em;
+  box-sizing: border-box;
 }
+
+.dir {
+  font-size: 1.4em;
+  color: #a3a3a3;
+  box-sizing: border-box;
+}
+
+.dir > p {
+  padding: .5em 1em;
+  border-left: 3px solid #ffd201;
+  border-bottom: 1px solid #c3c3c3;
+}
+
+.dir > div {
+  display: inline-block;
+  width: 25%;
+  height: 50px;
+  border: 1px solid #d9d9d9;
+  vertical-align: top;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
 /*paint*/
+#paint-tool {
+  background-color: #0482c4;
+}
+
+#paint #myCanvas {
+  width: 100%;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.displaypaint {
+  -webkit-flex: 6;
+  flex: 6;
+  padding: 1em;
+  box-sizing: border-box;
+}
 
 /*about*/
 
 /*animation*/
-
 @keyframes load-enter {
   0% {
     width: 50%;

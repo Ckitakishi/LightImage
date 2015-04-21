@@ -3,5 +3,14 @@ html
   head(lang='en')
     meta(charset='UTF-8')
     title Paint
+    link(href='css/style.css', rel='stylesheet')
+    script(src='/node_modules/vue/dist/vue.min.js')
+    script(src='/node_modules/jquery/dist/jquery.min.js')
   body
-    h1 building...
+    #paint
+      #paint-tool(v-class='load-enter: !isLoad, load-leave: isLoad')
+        header Paint
+        button(v-on='click: paint') Start Paint
+      .displaypaint(v-show='isLoad')
+        canvas#myCanvas(v-on='mousemove: drawPath($event)', v-show='canvasShow') Sorry
+    script(src='js/paint.js')

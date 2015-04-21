@@ -1,15 +1,20 @@
 new Vue({
   el: '#photo',
   data: {
-
+    isLoad: false,
+    canvasShow: false,
+    hasImage: false
   },
   created: function() {
     console.log("create");
   },
   methods: {
-    render: function() {
+    gray: function() {
       var canvas = document.getElementById("myCanvas");
       var image = document.getElementById("image-source");
+
+      this.canvasShow = true;
+      this.hasImage = true;
 
       canvas.width  = image.width;
       canvas.height = image.height;
@@ -33,6 +38,13 @@ new Vue({
         data[i + 2] = gray;
       }
       ctx.putImageData(canvasData, 0, 0); // at coords 0,0
+
+      this.$broadcast("imageHide");
+    }
+  },
+  events: {
+    loaded: function () {
+      this.isLoad = true;
     }
   }
 });
