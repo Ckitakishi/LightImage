@@ -73,13 +73,13 @@ new Vue({
       this.drawing = false;
     },
     drawPathAbort: function () {
-      this.drawing = false;
+      //this.drawing = false;
       this.aborted = true;
     },
     drawPathContinue: function (e) {
       var self = this;
 
-      if (self.aborted && !self.drawing) {
+      if (self.aborted && self.drawing) {
         var px = e.layerX;
         var py = e.layerY;
 

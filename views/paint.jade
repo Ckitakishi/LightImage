@@ -7,7 +7,7 @@ html
     script(src='/node_modules/vue/dist/vue.min.js')
     script(src='/node_modules/jquery/dist/jquery.min.js')
   body
-    #paint
+    #paint(v-on='mouseup: drawPathEnd')
       #paint-tool(v-class='load-enter: !isLoad, load-leave: isLoad')
         header Paint
         button(v-on='click: paint', v-text='paintBtn')
