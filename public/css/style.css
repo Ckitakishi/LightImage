@@ -237,6 +237,7 @@ a {
   width: 100%;
   border: 1px solid black;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .displaypaint {

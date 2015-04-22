@@ -10,7 +10,13 @@ html
     #paint
       #paint-tool(v-class='load-enter: !isLoad, load-leave: isLoad')
         header Paint
-        button(v-on='click: paint') Start Paint
+        button(v-on='click: paint', v-text='paintBtn')
       .displaypaint(v-show='isLoad')
-        canvas#myCanvas(v-on='mousemove: drawPath($event)', v-show='canvasShow') Sorry
+        canvas#myCanvas(
+        v-on='mouseup: drawPathEnd, ' +
+        'mousemove: drawPath($event), ' +
+        'mousedown: drawPathStart($event), ' +
+        'mouseleave: drawPathAbort, ' +
+        'mouseenter: drawPathContinue($event)',
+        v-show='canvasShow') Sorry
     script(src='js/paint.js')
