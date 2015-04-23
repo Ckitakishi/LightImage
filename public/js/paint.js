@@ -9,7 +9,9 @@ new Vue({
     aborted: false,
     paintBtn: "Start Paint",
     color: [],
-    strokeStyle: {}
+    strokeStyle: {},
+    weight: [],
+    fillWidth: "regular"
   },
   methods: {
     paint: function () {
@@ -41,6 +43,8 @@ new Vue({
           {r: 229, g: 0, b: 79}
         ]
       }
+
+      self.weight = ["light", "regular", "bold"]
     },
     drawPathStart: function (e) {
       var self = this;
@@ -68,10 +72,12 @@ new Vue({
         canvas.height = height;
         canvas.width = width;
         self.ctx = canvas.getContext("2d");
+
         this.ctx.strokeStyle = "rgb("
         + self.strokeStyle.r + ", "
         + self.strokeStyle.g + ", "
         + self.strokeStyle.b + ")";
+        this.ctx.lineWidth = this.lineWidth;
       }
 
       self.curPoint.x = px;
@@ -124,8 +130,10 @@ new Vue({
         b: e.b
       };
     },
-    undo: function () {
-      this.ctx.restore();
+    paintWeight: function (e) {
+      var self = this;
+      self.ctx.lineWidth = e.$index * 2 + 1;
+      self.lineWidth = self.ctx.lineWidth;
     }
   }
 });
