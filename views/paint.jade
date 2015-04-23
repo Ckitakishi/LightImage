@@ -11,6 +11,10 @@ html
       #paint-tool(v-class='load-enter: !isLoad, load-leave: isLoad')
         header Paint
         button(v-on='click: paint', v-text='paintBtn')
+        .toolbar(v-show='isLoad', v-on='click: undo')
+          div
+            .paint-color(v-repeat='color', v-on='click: paintColor(this)', v-style='background-color: "rgb(" + r + "," + g + "," + b + ")"')
+          button Undo
       .displaypaint(v-show='isLoad')
         canvas#myCanvas(
         v-on='mouseup: drawPathEnd, ' +
