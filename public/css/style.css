@@ -247,12 +247,37 @@ a {
   box-sizing: border-box;
 }
 
+.toolbar > div:first-child {
+  display: inline-block;
+  width: 18em;
+}
+
 .paint-color {
   display: inline-block;
   width: 48px;
   height: 48px;
   border: 0;
+  cursor: pointer;
   box-sizing: border-box;
+}
+
+.paint-weight {
+  margin: .3em;
+}
+
+#pixelCanvas {
+  border: 1px solid black;
+  cursor: pointer;
+  box-sizing: border-box;
+  height: 480px;
+  width: 480px;
+
+  image-rendering: optimizeSpeed;
+  image-rendering: crisp-edges;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  -ms-interpolation-mode: nearest-neighbor;
 }
 
 /*about*/

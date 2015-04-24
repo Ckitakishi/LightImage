@@ -1,3 +1,5 @@
+// TODO: mouse事件，应该只有左键，待修正，以及，添加touch事件。
+
 new Vue({
   el: '#paint',
   data: {
@@ -10,22 +12,28 @@ new Vue({
     paintBtn: "Start Paint",
     color: [],
     strokeStyle: {},
+    fillStyle: {},
     weight: [],
-    fillWidth: "regular"
+    fillWidth: "regular",
+    drawPixel: false
   },
   methods: {
     paint: function () {
       var self = this;
-      var canvas = document.getElementById("myCanvas");
-
       if (self.paintBtn === "Clear") {
+        var canvas;
+        if (self.drawPixel) {
+          canvas = document.getElementById("pixelCanvas");
+        } else {
+          canvas = document.getElementById("myCanvas");
+        }
         self.ctx.clearRect(0, 0, canvas.width, canvas.height);
       } else {
         // init
         self.isLoad = true;
         self.canvasShow = true;
         self.paintBtn = "Clear";
-        self.ctx = canvas.getContext("2d");
+        self.drawPixel = false;
 
         // paint tool init
         self.color = [
@@ -43,10 +51,16 @@ new Vue({
           {r: 229, g: 0, b: 79}
         ]
       }
-
-      self.weight = ["light", "regular", "bold"]
+      self.weight = ["light", "regular", "bold"];
+    },
+    drawPixel: function () {
+      this.paint();
+      this.drawPixel = true;
     },
     drawPathStart: function (e) {
+      if (e.which !== 1) {
+        return;
+      }
       var self = this;
       var px = e.layerX;
       var py = e.layerY;
@@ -123,17 +137,76 @@ new Vue({
       }
     },
     paintColor: function(e) {
-      this.ctx.strokeStyle = "rgb(" + e.r + ", " + e.g + ", " + e.b + ")";
-      this.strokeStyle = {
-        r: e.r,
-        g: e.g,
-        b: e.b
-      };
+      if (this.drawPixel) {
+        this.ctx.fillStyle = "rgb(" + e.r + ", " + e.g + ", " + e.b + ")";
+        this.fillStyle = {
+          r: e.r,
+          g: e.g,
+          b: e.b
+        };
+      } else {
+        this.ctx.strokeStyle = "rgb(" + e.r + ", " + e.g + ", " + e.b + ")";
+        this.strokeStyle = {
+          r: e.r,
+          g: e.g,
+          b: e.b
+        };
+      }
     },
     paintWeight: function (e) {
       var self = this;
       self.ctx.lineWidth = e.$index * 2 + 1;
       self.lineWidth = self.ctx.lineWidth;
+    },
+    pixel16: function() {
+      // TODO: magic number，需修改。
+      var self = this;
+      var canvas = document.getElementById("pixelCanvas");
+      canvas.height = 480;
+      canvas.width = 480;
+
+      self.ctx = canvas.getContext("2d");
+
+      self.ctx.imageSmoothingEnabled = false;
+    },
+    pixelStart: function (e) {
+      // left mouse button : 1
+      if (e.which !== 1) {
+        return;
+      }
+      var self = this;
+      var cx, cy;
+      var px = e.layerX;
+      var py = e.layerY;
+
+      self.curPoint.x = px;
+      self.curPoint.y = py;
+
+      cx = Math.floor(px / 30) * 30;
+      cy = Math.floor(py / 30) * 30;
+
+      self.ctx.rect(cx, cy, 30, 30);
+      self.ctx.fillRect(cx, cy, 30, 30);
+
+      self.drawing = true;
+    },
+    pixel: function(e) {
+      var self = this;
+      var px, py, cx, cy;
+
+      if (self.drawing) {
+        px = e.layerX;
+        py = e.layerY;
+
+        cx = Math.floor(px / 30) * 30;
+        cy = Math.floor(py / 30) * 30;
+
+        self.ctx.rect(cx, cy, 30, 30);
+        self.ctx.fillRect(cx, cy, 30, 30);
+
+        self.curPoint.x = px;
+        self.curPoint.y = py;
+      }
     }
   }
 });
