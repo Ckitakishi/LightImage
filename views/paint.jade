@@ -18,7 +18,7 @@ html
           div(v-if='!drawPixel')
             button.paint-weight(v-repeat='weight', v-on='click: paintWeight(this)', v-text='$value')
           div(v-if='drawPixel')
-            button.pixel-size(v-on='click: pixel16') 16*16
+            button.pixel-size(v-repeat='["16*16", "32*32", "48*48"]', v-on='click: pixelSize($index)', v-text='$value')
       .displaypaint(v-show='isLoad')
         // normal
         template(v-if='canvasShow && !drawPixel')

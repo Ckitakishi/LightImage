@@ -266,9 +266,9 @@ a {
 }
 
 #pixelCanvas {
-  border: 1px solid black;
+  margin: 1em;
+  border: 12px solid #efefef;
   cursor: pointer;
-  box-sizing: border-box;
   height: 480px;
   width: 480px;
 

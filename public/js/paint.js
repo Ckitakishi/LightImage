@@ -15,7 +15,8 @@ new Vue({
     fillStyle: {},
     weight: [],
     fillWidth: "regular",
-    drawPixel: false
+    drawPixel: false,
+    multiple: 30
   },
   methods: {
     paint: function () {
@@ -56,6 +57,7 @@ new Vue({
     drawPixel: function () {
       this.paint();
       this.drawPixel = true;
+      this.multiple = 30;
     },
     drawPathStart: function (e) {
       if (e.which !== 1) {
@@ -158,15 +160,16 @@ new Vue({
       self.ctx.lineWidth = e.$index * 2 + 1;
       self.lineWidth = self.ctx.lineWidth;
     },
-    pixel16: function() {
+    pixelSize: function(index) {
       // TODO: magic number，需修改。
       var self = this;
+
+      self.multiple = 480 / ((index + 1) * 16);
       var canvas = document.getElementById("pixelCanvas");
       canvas.height = 480;
       canvas.width = 480;
 
       self.ctx = canvas.getContext("2d");
-
       self.ctx.imageSmoothingEnabled = false;
     },
     pixelStart: function (e) {
@@ -182,11 +185,20 @@ new Vue({
       self.curPoint.x = px;
       self.curPoint.y = py;
 
-      cx = Math.floor(px / 30) * 30;
-      cy = Math.floor(py / 30) * 30;
+      cx = Math.floor(px / self.multiple) * self.multiple;
+      cy = Math.floor(py / self.multiple) * self.multiple;
 
-      self.ctx.rect(cx, cy, 30, 30);
-      self.ctx.fillRect(cx, cy, 30, 30);
+      if (!self.ctx) {
+        // 默认值：16*16
+        var canvas = document.getElementById("pixelCanvas");
+        canvas.height = 480;
+        canvas.width = 480;
+
+        self.ctx = canvas.getContext("2d");
+      }
+
+      self.ctx.rect(cx, cy, self.multiple, self.multiple);
+      self.ctx.fillRect(cx, cy, self.multiple, self.multiple);
 
       self.drawing = true;
     },
@@ -198,11 +210,11 @@ new Vue({
         px = e.layerX;
         py = e.layerY;
 
-        cx = Math.floor(px / 30) * 30;
-        cy = Math.floor(py / 30) * 30;
+        cx = Math.floor(px / self.multiple) * self.multiple;
+        cy = Math.floor(py / self.multiple) * self.multiple;
 
-        self.ctx.rect(cx, cy, 30, 30);
-        self.ctx.fillRect(cx, cy, 30, 30);
+        self.ctx.rect(cx, cy, self.multiple, self.multiple);
+        self.ctx.fillRect(cx, cy, self.multiple, self.multiple);
 
         self.curPoint.x = px;
         self.curPoint.y = py;
