@@ -1,12 +1,6 @@
-doctype html
-html
-  head(lang='en')
-    meta(charset='UTF-8')
-    title ColorAnalysis
-    link(href='css/style.css', rel='stylesheet')
-    script(src='/node_modules/vue/dist/vue.min.js')
-    script(src='views/components/upload.js')
-  body
+include header
+  block title
+    title Color
     include components/upload
     #color-analysis
       #upload(v-class='load-enter: !isLoad, load-leave: isLoad')

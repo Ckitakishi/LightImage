@@ -1,12 +1,6 @@
-doctype html
-html
-  head(lang='en')
-    meta(charset='UTF-8')
+include header
+  block title
     title Photo
-    link(href='css/style.css', rel='stylesheet')
-    script(src='/node_modules/vue/dist/vue.min.js')
-    script(src='views/components/upload.js')
-  body
     include components/upload
     #photo
       .displayphoto(v-show='isLoad')
@@ -14,15 +8,18 @@ html
           li.dir
             p 滤镜
             div(v-on='click: gray') gray
-            div(v-on='click: pixel') pixel
-            div(v-on='click: b') b
-            div(v-on='click: c') c
+            div(v-on='click: blackwhite') blackwhite
+            div(v-on='click: reversal') reversal
+            div(v-on='click: emboss') emboss
+            div(v-on='click: sharp') sharp
+            div(v-on='click: blur') blur
           li.dir
             p 颜色
-            div(v-on='click: green')
+            div(v-on='click: green') green
             div(v-on='click: red')
           li.dir
             p 剪裁
+            div(v-on='click: green') 分辨率降低
           li.dir
             p 旋转与对称
       #upload(v-class='load-enter: !isLoad, load-leave: isLoad')
