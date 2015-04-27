@@ -1,9 +1,11 @@
 include header
   block title
     title Color
-    include components/upload
+    include components/upload/template
+    include components/back/template
     #color-analysis
       #upload(v-class='load-enter: !isLoad, load-leave: isLoad')
+        back-component
         header Color Analysis
         button(v-on='click: analysis') Start Analysis
         upload-component

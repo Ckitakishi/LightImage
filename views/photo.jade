@@ -1,7 +1,8 @@
 include header
   block title
     title Photo
-    include components/upload
+    include components/upload/template
+    include components/back/template
     #photo
       .displayphoto(v-show='isLoad')
         ul
@@ -23,6 +24,7 @@ include header
           li.dir
             p 旋转与对称
       #upload(v-class='load-enter: !isLoad, load-leave: isLoad')
+        back-component
         header PHOTO
         upload-component
         canvas#myCanvas(v-show='canvasShow') Sorry

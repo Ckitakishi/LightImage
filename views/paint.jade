@@ -1,8 +1,10 @@
 include header
   block title
     title Paint
+    include components/back/template
     #paint(v-on='mouseup: drawPathEnd')
       #paint-tool(v-class='load-enter: !isLoad, load-leave: isLoad')
+        back-component
         header Paint
         button(v-on='click: paint', v-text='paintBtn')
         button(v-on='click: drawPixel', v-show='!isLoad') Draw Pixel Art
