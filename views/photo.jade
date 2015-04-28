@@ -14,13 +14,15 @@ include header
             div(v-on='click: emboss') emboss
             div(v-on='click: sharp') sharp
             div(v-on='click: blur') blur
+            div(v-on='click: gaussianBlur') gaussianBlur
           li.dir
             p 颜色
             div(v-on='click: green') green
             div(v-on='click: red')
           li.dir
-            p 剪裁
-            div(v-on='click: green') 分辨率降低
+            p 处理
+            div(v-on='click: cut') 剪裁
+            div(v-on='click: sizing') 尺寸调整
           li.dir
             p 旋转与对称
       #upload(v-class='load-enter: !isLoad, load-leave: isLoad')

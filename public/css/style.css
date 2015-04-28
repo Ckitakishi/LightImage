@@ -46,6 +46,8 @@ a {
 #upload,
 #paint-tool {
   text-align: center;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 #upload button,
@@ -64,6 +66,13 @@ a {
 }
 
 /*back*/
+.back {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 4px;
+}
+
 .back:after {
   content: '';
   position: absolute;
@@ -73,6 +82,10 @@ a {
   height: 5px;
   background: #fff;
   box-shadow: 0 10px 0 #fff, 0 20px 0 #fff;
+}
+
+#photo .back {
+  float: right;
 }
 
 #photo .back:after {

@@ -4,5 +4,10 @@ Vue.component('back-component', {
     return {
 
     }
+  },
+  methods: {
+    backToHome: function () {
+      // animation broadcast
+    }
   }
 });
