@@ -96,6 +96,9 @@ new Vue({
       var data = canvasData.data;
       var r, g, b, a;
 
+      var output = this.ctx.createImageData(canvasData.width, canvasData.height);
+      var outputData = output.data;
+
       for (var i = 0, len = data.length; i < len; i+=4) {
         r = data[i];
         g = data[i + 1];
@@ -104,11 +107,12 @@ new Vue({
 
         var gray = .299 * r + .587 * g + .114 * b;
 
-        data[i] = gray;
-        data[i + 1] = gray;
-        data[i + 2] = gray;
+        outputData[i] = gray;
+        outputData[i + 1] = gray;
+        outputData[i + 2] = gray;
+        outputData[i + 3] = a;
       }
-      this.ctx.putImageData(canvasData, 0, 0); // at coords 0,0
+      this.ctx.putImageData(output, 0, 0); // at coords 0,0
 
       this.$broadcast("imageHide");
     },
@@ -118,24 +122,29 @@ new Vue({
       }
       var canvasData = this.canvasData;
       var data = canvasData.data;
-      var r, g, b;
+      var r, g, b, a;
+
+      var output = this.ctx.createImageData(canvasData.width, canvasData.height);
+      var outputData = output.data;
 
       for (var i = 0, len = data.length; i < len; i+=4) {
         r = data[i];
         g = data[i + 1];
         b = data[i + 2];
+        a = data[i + 3];
 
         if ((r + b + g) / 3 > 128) {
-          data[i] = 255;
-          data[i + 1] = 255;
-          data[i + 2] = 255;
+          outputData[i] = 255;
+          outputData[i + 1] = 255;
+          outputData[i + 2] = 255;
         } else {
-          data[i] = 0;
-          data[i + 1] = 0;
-          data[i + 2] = 0;
+          outputData[i] = 0;
+          outputData[i + 1] = 0;
+          outputData[i + 2] = 0;
         }
+        outputData[i + 3] = a;
       }
-      this.ctx.putImageData(canvasData, 0, 0);
+      this.ctx.putImageData(output, 0, 0);
 
       // TODO: ....
       this.$broadcast("imageHide");
@@ -146,16 +155,21 @@ new Vue({
       }
       var canvasData = this.canvasData;
       var data = canvasData.data;
-      var r, g, b;
+      var r, g, b, a;
+
+      var output = this.ctx.createImageData(canvasData.width, canvasData.height);
+      var outputData = output.data;
 
       for (var i = 0, len = data.length; i < len; i+=4) {
         r = data[i];
         g = data[i + 1];
         b = data[i + 2];
+        a = data[i + 3];
 
-        data[i] = 255 - r;
-        data[i + 1] = 255 - g;
-        data[i + 2] = 255 - b;
+        outputData[i] = 255 - r;
+        outputData[i + 1] = 255 - g;
+        outputData[i + 2] = 255 - b;
+        outputData[i + 3] = a;
       }
       this.ctx.putImageData(canvasData, 0, 0);
 
@@ -168,13 +182,17 @@ new Vue({
       }
       var canvasData = this.canvasData;
       var data = canvasData.data;
-      var r, g, b;
+      var r, g, b, a;
       var prer = 128, preg = 128, preb = 128;
+
+      var output = this.ctx.createImageData(canvasData.width, canvasData.height);
+      var outputData = output.data;
 
       for (var i = 0, len = data.length; i < len; i+=4) {
         r = data[i] - prer + 128;
         g = data[i + 1] - preg + 128;
         b = data[i + 2] - preb + 128;
+        a = data[i + 3];
 
         prer = data[i];
         preg = data[i + 1];
@@ -182,11 +200,12 @@ new Vue({
 
         var gray = .299 * r + .587 * g + .114 * b;
 
-        data[i] = gray;
-        data[i + 1] = gray;
-        data[i + 2] = gray;
+        outputData[i] = gray;
+        outputData[i + 1] = gray;
+        outputData[i + 2] = gray;
+        outputData[i + 3] = a;
       }
-      this.ctx.putImageData(canvasData, 0, 0); // at coords 0,0
+      this.ctx.putImageData(output, 0, 0); // at coords 0,0
 
       this.$broadcast("imageHide");
     },
@@ -229,6 +248,60 @@ new Vue({
       ];
       var selectedKernel = this.normlize(blurKernel);
       this.convolve(selectedKernel);
+    },
+
+  //  ----------------------- 几何变换 ------------------------
+
+    hSymmetry: function () {
+      // 方案一： 交换对应像素
+      // 方案二： 映射, [-1,0,0,0,1,0,width-1,0,1];
+      if (!this.initial) {
+        this.initCanvas();
+      }
+
+      var canvasData = this.canvasData;
+      var data = canvasData.data;
+      var w = canvasData.width, h = canvasData.height;
+      var i, j, k;
+
+      var output = this.ctx.createImageData(w, h);
+      var outputData = output.data;
+
+      for (i = 0; i < h; i++) {
+        for (j = 0; j < w / 2; j++) {
+          for (k = 0; k < 4; k++) {
+            outputData[w * i * 4 + (w - j - 1) * 4 + k] = data[w * i * 4 + j * 4 + k];
+            outputData[w * i * 4 + j * 4 + k] = data[w * i * 4 + (w - j - 1) * 4 + k];
+          }
+        }
+      }
+      this.ctx.putImageData(output, 0, 0); // at coords 0,0
+
+      this.$broadcast("imageHide");
+    },
+    vSymmetry: function () {
+      if (!this.initial) {
+        this.initCanvas();
+      }
+      var canvasData = this.canvasData;
+      var data = canvasData.data;
+      var w = canvasData.width, h = canvasData.height;
+      var i, j, k;
+
+      var output = this.ctx.createImageData(w, h);
+      var outputData = output.data;
+
+      for (i = 0; i < h / 2; i++) {
+        for (j = 0; j < w; j++) {
+          for (k = 0; k < 4; k++) {
+            outputData[w * i * 4 + j * 4 + k] = data[w * (h - i - 1) * 4 + j * 4 + k];
+            outputData[w * (h - i - 1) * 4 + j * 4 + k] = data[w * i * 4 + j * 4 + k];
+          }
+        }
+      }
+      this.ctx.putImageData(canvasData, 0, 0); // at coords 0,0
+
+      this.$broadcast("imageHide");
     }
   },
   events: {
