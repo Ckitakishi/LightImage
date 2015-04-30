@@ -171,7 +171,7 @@ new Vue({
         outputData[i + 2] = 255 - b;
         outputData[i + 3] = a;
       }
-      this.ctx.putImageData(canvasData, 0, 0);
+      this.ctx.putImageData(output, 0, 0);
 
       this.$broadcast("imageHide");
     },
@@ -236,7 +236,7 @@ new Vue({
       var selectedKernel = this.normlize(blurKernel);
       this.convolve(selectedKernel);
     },
-    gaussianBlur: function() {
+    gaussianBlur: function() {216081938
       if (!this.initial) {
         this.initCanvas();
       }
@@ -299,9 +299,36 @@ new Vue({
           }
         }
       }
-      this.ctx.putImageData(canvasData, 0, 0); // at coords 0,0
+      this.ctx.putImageData(output, 0, 0); // at coords 0,0
 
       this.$broadcast("imageHide");
+    },
+    rotation: function () {
+      if (!this.initial) {
+        this.initCanvas();
+      }
+
+      var canvasData = this.canvasData;
+      var data = canvasData.data;
+      var w = canvasData.width, h = canvasData.height;
+      var i, j, k, x, y;
+
+      var output = this.ctx.createImageData(w, h);
+      var outputData = output.data;
+
+      for (i = 0; i < h; i++) {
+        for (j = 0; j < w; j++) {
+          for (k = 0; k < 4; k++) {
+            outputData[w * j * 4 + i * 4 + k] = data[w * i * 4 + j * 4 + k];
+          }
+        }
+      }
+      this.ctx.putImageData(output, 0, 0); // at coords 0,0
+
+      this.$broadcast("imageHide");
+    },
+    zoom: function () {
+
     }
   },
   events: {

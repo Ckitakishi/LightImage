@@ -27,6 +27,8 @@ include header
             p 旋转与对称
             div(v-on='click: hSymmetry') Horizontal Symmetry
             div(v-on='click: vSymmetry') vertical Symmetry
+            div(v-on='click: rotation') Rotation
+            div(v-on='click: zoom') Zoom
       #upload(v-class='load-enter: !isLoad, load-leave: isLoad')
         back-component
         header PHOTO
