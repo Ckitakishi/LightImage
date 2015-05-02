@@ -7,7 +7,9 @@ new Vue({
     hasImage: false,
     canvasData: "",
     ctx: "",
-    initial: false
+    initial: false,
+    imageWidth: 0,
+    imageHeight: 0
   },
   created: function() {
     console.log("create");
@@ -21,8 +23,15 @@ new Vue({
       self.canvasShow = true;
       self.hasImage = true;
 
-      canvas.width  = image.width;
-      canvas.height = image.height;
+      if (self.imageWidth) {
+        canvas.width  = self.imageWidth;
+        canvas.height = self.imageHeight;
+      } else {
+        self.imageWidth = image.width;
+        self.imageHeight = image.height;
+        canvas.width  = image.width;
+        canvas.height = image.height;
+      }
 
       self.ctx = canvas.getContext("2d");
       self.ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
@@ -308,10 +317,72 @@ new Vue({
         this.initCanvas();
       }
 
+      var canvas = document.getElementById("myCanvas");
+      this.initial = false;
+
       var canvasData = this.canvasData;
       var data = canvasData.data;
       var w = canvasData.width, h = canvasData.height;
-      var i, j, k, x, y;
+      var i, j, k;
+
+      canvas.width = h;
+      canvas.height = w;
+
+      var output = this.ctx.createImageData(canvas.width, canvas.height);
+      var outputData = output.data;
+
+      // 方案一： 像素处理
+      // 方案二： rotate方法
+      for (i = 0; i < h; i++) {
+        for (j = 0; j < w; j++) {
+          for (k = 0; k < 4; k++) {
+            // 顺90
+            outputData[h * j * 4 + (h - i - 1)* 4 + k] = data[w * i * 4 + j * 4 + k];
+          }
+        }
+      }
+      this.ctx.putImageData(output, 0, 0);
+      this.$broadcast("imageHide");
+    },
+    antiRotation: function () {
+      if (!this.initial) {
+        this.initCanvas();
+      }
+
+      var canvas = document.getElementById("myCanvas");
+      this.initial = false;
+
+      var canvasData = this.canvasData;
+      var data = canvasData.data;
+      var w = canvasData.width, h = canvasData.height;
+      var i, j, k;
+
+      canvas.width = h;
+      canvas.height = w;
+
+      var output = this.ctx.createImageData(canvas.width, canvas.height);
+      var outputData = output.data;
+
+      for (i = 0; i < h; i++) {
+        for (j = 0; j < w; j++) {
+          for (k = 0; k < 4; k++) {
+            // 逆90
+            outputData[h * (w - j -1) * 4 + i * 4 + k] = data[w * i * 4 + j * 4 + k];
+          }
+        }
+      }
+      this.ctx.putImageData(output, 0, 0);
+      this.$broadcast("imageHide");
+    },
+    allRotation: function() {
+      if (!this.initial) {
+        this.initCanvas();
+      }
+
+      var canvasData = this.canvasData;
+      var data = canvasData.data;
+      var w = canvasData.width, h = canvasData.height;
+      var i, j, k;
 
       var output = this.ctx.createImageData(w, h);
       var outputData = output.data;
@@ -319,16 +390,13 @@ new Vue({
       for (i = 0; i < h; i++) {
         for (j = 0; j < w; j++) {
           for (k = 0; k < 4; k++) {
-            outputData[w * j * 4 + i * 4 + k] = data[w * i * 4 + j * 4 + k];
+            // 逆90
+            outputData[(h - i - 1) * w * 4 + (w - j - 1) * 4 + k] = data[w * i * 4 + j * 4 + k];
           }
         }
       }
-      this.ctx.putImageData(output, 0, 0); // at coords 0,0
-
+      this.ctx.putImageData(output, 0, 0);
       this.$broadcast("imageHide");
-    },
-    zoom: function () {
-
     }
   },
   events: {
