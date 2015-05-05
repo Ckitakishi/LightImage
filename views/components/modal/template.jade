@@ -1,0 +1,17 @@
+script(type="text/x-template", id="temp-modal")
+  .modal-container
+    .modal
+      .modal-header(v-text='modalTitle')
+      .modal-body
+        template(v-if='sizing')
+          label.m-label
+            span width
+            input(type='text', v-model = "width")
+            | px
+          label.m-label
+            span height
+            input(type='text', v-model = "height")
+            | px
+      .modal-footer
+        button(v-on='click: clickCancel') Cancel
+        button(v-on='click: clickOK') OK

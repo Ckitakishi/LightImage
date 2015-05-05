@@ -3,8 +3,10 @@ include header
     title Photo
     include components/upload/template
     include components/back/template
+    include components/modal/template
     #photo
       .displayphoto(v-show='isLoad')
+        modal-component(v-with='modalTitle: "Set Sizing"', v-if='modalShow')
         ul
           li.dir
             p 滤镜
@@ -34,5 +36,6 @@ include header
         back-component
         header PHOTO
         upload-component
-        canvas#myCanvas(v-show='canvasShow') Sorry
+        .canvasContainer
+          canvas#myCanvas(v-show='canvasShow') Sorry
     script(src='js/photo.js')

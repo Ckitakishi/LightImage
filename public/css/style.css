@@ -99,6 +99,72 @@ a {
   left: 4px;
 }
 
+/*modal*/
+.modal-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: -webkit-flex;
+  display: flex;
+  background-color: rgba(0, 0, 0, .3);
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.modal {
+  width: 30%;
+  margin: 6em;
+  background-color: #ffffff;
+}
+
+.modal-header {
+  margin: .5em;
+  padding: .5em;
+  border-bottom: 1px solid #efefef;
+}
+
+.modal-body {
+  margin: 1em;
+}
+
+.m-label {
+  display: block;
+  margin: 1em;
+}
+
+.m-label span {
+  display: inline-block;
+  width: 3em;
+  margin: 0 1em;
+  text-align: right;
+}
+
+.m-label input {
+  padding: .5em;
+}
+
+.m-label input:focus {
+  outline: none;
+}
+
+.modal-footer {
+  margin: 1em;
+  border-top: 1px solid #efefef;
+}
+
+.modal-footer button {
+  margin: .5em 0 .5em .5em;
+  padding: .5em;
+  border: 1px solid #efefef;
+  background-color: #ffffff;
+  float: right;
+  cursor: pointer;
+}
+
 /*index*/
 #index {
   padding: .6em;
@@ -262,6 +328,10 @@ a {
   vertical-align: top;
   cursor: pointer;
   box-sizing: border-box;
+}
+
+.canvasContainer {
+  overflow: auto;
 }
 
 /*paint*/

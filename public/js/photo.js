@@ -9,7 +9,9 @@ new Vue({
     ctx: "",
     initial: false,
     imageWidth: 0,
-    imageHeight: 0
+    imageHeight: 0,
+    modalShow: false,
+    sourceImage: {}
   },
   created: function() {
     console.log("create");
@@ -397,11 +399,46 @@ new Vue({
       }
       this.ctx.putImageData(output, 0, 0);
       this.$broadcast("imageHide");
+    },
+
+    //--------------------------图像处理--------------------------
+
+    cut: function () {
+      
+    },
+    sizing: function () {
+      if (!this.initial) {
+        this.initCanvas();
+      }
+      var self = this;
+      var info = {
+        type: "sizing",
+        width: self.sourceImage.width,
+        height: self.sourceImage.height
+      };
+      this.modalShow = true;
+      // TODO: 优化
+      setTimeout(function () {
+        self.$broadcast("openModal", info);
+      },50);
+
+      this.$broadcast("imageHide");
     }
   },
   events: {
-    loaded: function () {
+    loaded: function (imageInfo) {
       this.isLoad = true;
+      this.sourceImage = {
+        width: imageInfo.width,
+        height: imageInfo.height
+      }
+    },
+    closeModal: function () {
+      this.modalShow = false;
+    },
+    startAction: function(result) {
+      this.modalShow = false;
+      console.log(result);
     }
   }
 });
