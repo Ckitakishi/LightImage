@@ -37,6 +37,7 @@ a {
   border: 1px solid white;
   color: white;
   line-height: 30px;
+  cursor: pointer;
 }
 
 #upload-file {
@@ -63,6 +64,10 @@ a {
   text-align: center;
   cursor: pointer;
   box-sizing: border-box;
+}
+
+#upload form {
+  display: inline-block;
 }
 
 /*back*/
@@ -163,6 +168,10 @@ a {
   background-color: #ffffff;
   float: right;
   cursor: pointer;
+}
+
+.modal-footer button:focus {
+  outline: none;
 }
 
 /*index*/
@@ -332,6 +341,17 @@ a {
 
 .canvasContainer {
   overflow: auto;
+}
+
+#save {
+  display: inline-block;
+  position: relative;
+  bottom: 30px;
+  margin: 0 1em;
+}
+
+#save:focus {
+  outline: none;
 }
 
 /*paint*/

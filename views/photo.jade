@@ -35,6 +35,7 @@ include header
       #upload(v-class='load-enter: !isLoad, load-leave: isLoad')
         back-component
         header PHOTO
+        button#save(v-show='isLoad', v-on='click: save') Save Image
         upload-component
         .canvasContainer
           canvas#myCanvas(v-show='canvasShow') Sorry

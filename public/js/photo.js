@@ -41,6 +41,16 @@ new Vue({
 
       self.initial = true;
     },
+    save: function () {
+      var self = this;
+      self.modalShow = true;
+      var info = {
+        type: "save"
+      };
+      setTimeout(function () {
+        self.$broadcast("openModal", info);
+      },50);
+    },
     normlize: function (kernel) {
       var len = kernel.length;
       var normal = new Array(len);

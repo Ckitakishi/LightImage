@@ -12,6 +12,16 @@ script(type="text/x-template", id="temp-modal")
             span height
             input(type='text', v-model = "height")
             | px
+        template(v-if='save')
+          label.m-label
+            span name
+            input(type='text', v-model='imageName')
+            | .{{imageType}}
+          label.m-label
+            span type
+            select(v-model='imageType')
+              option png
+              option jpeg
       .modal-footer
         button(v-on='click: clickCancel') Cancel
         button(v-on='click: clickOK') OK
