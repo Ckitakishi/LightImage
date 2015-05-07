@@ -38,5 +38,6 @@ include header
         button#save(v-show='isLoad', v-on='click: save') Save Image
         upload-component
         .canvasContainer
-          canvas#myCanvas(v-show='canvasShow') Sorry
+          image#preview(src='{{preview}}', v-show='canvasShow')
+          canvas#myCanvas(style='display: none') Sorry
     script(src='js/photo.js')

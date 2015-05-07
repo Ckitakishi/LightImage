@@ -1,17 +1,19 @@
-// TODO: 代码优化，像素处理过程
+// TODO: 代码优化
 new Vue({
   el: '#photo',
   data: {
     isLoad: false,
     canvasShow: false,
     hasImage: false,
+    canvas: "",
     canvasData: "",
     ctx: "",
     initial: false,
     imageWidth: 0,
     imageHeight: 0,
     modalShow: false,
-    sourceImage: {}
+    sourceImage: {},
+    preview: ""
   },
   created: function() {
     console.log("create");
@@ -21,24 +23,26 @@ new Vue({
       var self = this;
       var canvas = document.getElementById("myCanvas");
       var image = document.getElementById("image-source");
+      var preview = document.getElementById("preview");
 
       self.canvasShow = true;
       self.hasImage = true;
 
-      if (self.imageWidth) {
-        canvas.width  = self.imageWidth;
-        canvas.height = self.imageHeight;
-      } else {
+      if (!self.imageWidth) {
         self.imageWidth = image.width;
         self.imageHeight = image.height;
-        canvas.width  = image.width;
-        canvas.height = image.height;
       }
+      canvas.width  = self.sourceImage.width;
+      canvas.height = self.sourceImage.height;
+      preview.width = self.imageWidth;
+      preview.height = self.imageHeight;
 
       self.ctx = canvas.getContext("2d");
       self.ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
       self.canvasData = self.ctx.getImageData(0, 0, canvas.width, canvas.height);
 
+      self.preview = canvas.toDataURL();
+      self.canvas = canvas;
       self.initial = true;
     },
     save: function () {
@@ -107,6 +111,7 @@ new Vue({
         }
       }
       this.ctx.putImageData(output, 0, 0);
+      this.preview = this.canvas.toDataURL();
       this.$broadcast("imageHide");
     },
     gray: function() {
@@ -134,6 +139,7 @@ new Vue({
         outputData[i + 3] = a;
       }
       this.ctx.putImageData(output, 0, 0); // at coords 0,0
+      this.preview = this.canvas.toDataURL();
 
       this.$broadcast("imageHide");
     },
@@ -166,6 +172,7 @@ new Vue({
         outputData[i + 3] = a;
       }
       this.ctx.putImageData(output, 0, 0);
+      this.preview = this.canvas.toDataURL();
 
       // TODO: ....
       this.$broadcast("imageHide");
@@ -193,6 +200,7 @@ new Vue({
         outputData[i + 3] = a;
       }
       this.ctx.putImageData(output, 0, 0);
+      this.preview = this.canvas.toDataURL();
 
       this.$broadcast("imageHide");
     },
@@ -227,6 +235,7 @@ new Vue({
         outputData[i + 3] = a;
       }
       this.ctx.putImageData(output, 0, 0); // at coords 0,0
+      this.preview = this.canvas.toDataURL();
 
       this.$broadcast("imageHide");
     },
@@ -297,6 +306,7 @@ new Vue({
         }
       }
       this.ctx.putImageData(output, 0, 0); // at coords 0,0
+      this.preview = this.canvas.toDataURL();
 
       this.$broadcast("imageHide");
     },
@@ -321,6 +331,7 @@ new Vue({
         }
       }
       this.ctx.putImageData(output, 0, 0); // at coords 0,0
+      this.preview = this.canvas.toDataURL();
 
       this.$broadcast("imageHide");
     },
@@ -329,18 +340,22 @@ new Vue({
         this.initCanvas();
       }
 
-      var canvas = document.getElementById("myCanvas");
       this.initial = false;
-
+      var preview = document.getElementById("preview");
       var canvasData = this.canvasData;
       var data = canvasData.data;
-      var w = canvasData.width, h = canvasData.height;
+      var w = canvasData.width,
+        h = canvasData.height,
+        iw = this.imageWidth,
+        ih = this.imageHeight;
       var i, j, k;
 
-      canvas.width = h;
-      canvas.height = w;
+      preview.width = ih;
+      preview.height = iw;
+      this.canvas.width = h;
+      this.canvas.height = w;
 
-      var output = this.ctx.createImageData(canvas.width, canvas.height);
+      var output = this.ctx.createImageData(h, w);
       var outputData = output.data;
 
       // 方案一： 像素处理
@@ -354,6 +369,7 @@ new Vue({
         }
       }
       this.ctx.putImageData(output, 0, 0);
+      this.preview = this.canvas.toDataURL();
       this.$broadcast("imageHide");
     },
     antiRotation: function () {
@@ -361,18 +377,22 @@ new Vue({
         this.initCanvas();
       }
 
-      var canvas = document.getElementById("myCanvas");
       this.initial = false;
 
       var canvasData = this.canvasData;
       var data = canvasData.data;
-      var w = canvasData.width, h = canvasData.height;
+      var w = canvasData.width,
+        h = canvasData.height,
+        iw = this.imageWidth,
+        ih = this.imageHeight;
       var i, j, k;
 
-      canvas.width = h;
-      canvas.height = w;
+      preview.width = ih;
+      preview.height = iw;
+      this.canvas.width = h;
+      this.canvas.height = w;
 
-      var output = this.ctx.createImageData(canvas.width, canvas.height);
+      var output = this.ctx.createImageData(h, w);
       var outputData = output.data;
 
       for (i = 0; i < h; i++) {
@@ -384,6 +404,7 @@ new Vue({
         }
       }
       this.ctx.putImageData(output, 0, 0);
+      this.preview = this.canvas.toDataURL();
       this.$broadcast("imageHide");
     },
     allRotation: function() {
@@ -408,6 +429,7 @@ new Vue({
         }
       }
       this.ctx.putImageData(output, 0, 0);
+      this.preview = this.canvas.toDataURL();
       this.$broadcast("imageHide");
     },
 
@@ -447,8 +469,21 @@ new Vue({
       this.modalShow = false;
     },
     startAction: function(result) {
+      if (result) {
+        if (!this.initial) {
+          // 若并未创建画布
+          this.initCanvas();
+        }
+        var image = document.getElementById("image-source");
+        if (result.type === "sizing") {
+          this.canvas.width = result.width;
+          this.canvas.height = result.height;
+          this.ctx.drawImage(image, 0, 0, result.width, result.height);
+        }
+      } else {
+        console.log("错误处理");
+      }
       this.modalShow = false;
-      console.log(result);
     }
   }
 });

@@ -7,8 +7,18 @@ Vue.component('modal-component', {
       imageName: "",
       imageType: "png",
       width: 0,
-      height: 0
+      height: 0,
+      whRatio: 1
     }
+  },
+  created: function () {
+    this.$watch('width', function () {
+      this.height = Math.floor(this.width / this.whRatio);
+    });
+
+    this.$watch('height', function () {
+      this.width = Math.floor(this.height * this.whRatio);
+    });
   },
   methods: {
     reload: function () {
@@ -20,23 +30,37 @@ Vue.component('modal-component', {
     },
     clickOK: function () {
       if (this.save) {
-        var canvas = document.getElementById("myCanvas");
-        var aLink = document.createElement("a"),
+        var image = document.getElementById("image-source");
+
+        if (image.style.display === "none") {
+          var canvas = document.getElementById("myCanvas"),
+            aLink = document.createElement("a"),
             event = document.createEvent("event");
 
-        var url;
-        if (this.imageType === "PNG") {
-          url = canvas.toDataURL();
+          var url;
+          if (this.imageType === "png") {
+            url = canvas.toDataURL();
+          } else {
+            url = canvas.toDataURL("image/" + this.imageType);
+          }
+          event.initEvent("click");
+          aLink.download = this.imageName;
+          aLink.href = url;
+          aLink.dispatchEvent(event);
+          // 最好等待图片保存结束
+          //this.$dispatch("closeModal");
         } else {
-          url = canvas.toDataURL("image/" + this.imageType);
+          console.log("还未修改，做出提示");
         }
-        event.initEvent("click");
-        aLink.download = this.imageName;
-        aLink.href = url;
-        aLink.dispatchEvent(event);
-      } else {
-        var result = "test";
+      } else if (this.sizing) {
+        var result = {
+          type: "sizing",
+          width: this.width,
+          height: this.height
+        };
         this.$dispatch("startAction", result);
+      } else {
+
       }
     }
   },
@@ -53,6 +77,7 @@ Vue.component('modal-component', {
       } else if (result.type === "sizing") {
         self.width = result.width;
         self.height = result.height;
+        self.whRatio = result.width / result.height;
         self.sizing = true;
       }
     },
