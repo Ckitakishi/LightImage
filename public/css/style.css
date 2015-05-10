@@ -66,13 +66,13 @@ a {
   box-sizing: border-box;
 }
 
-#upload form {
+#photo #upload form {
   display: inline-block;
 }
 
 /*back*/
 .back {
-  display: block;
+  display: inline;
   width: 32px;
   height: 32px;
   margin: 4px;
@@ -96,6 +96,11 @@ a {
 #photo .back:after {
   top: 4px;
   right: 4px;
+}
+
+#paint .back,
+#color-analysis .back {
+  float: left;
 }
 
 #paint .back:after,
@@ -174,72 +179,172 @@ a {
   outline: none;
 }
 
+/*crop*/
+#crop {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
 /*index*/
 #index {
-  padding: .6em;
-  box-sizing: border-box;
+  display: -webkit-flex;
+  display: flex;
+  background: url("../images/background.gif") no-repeat center center fixed;
+  background-size: cover;
 }
 
 .title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: -webkit-flex;
-  display: flex;
-  width: 30%;
-  height: 30%;
-  background-color: white;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  flex: 2;
+  -webkit-flex: 2;
+  text-align: center;
+}
+
+.title span {
+  display: inline-block;
+  margin-top: 30%;
   font-size: 3em;
-  box-sizing: border-box;
 }
 
 .menu {
-  height: 100%;
+  flex: 3;
+  -webkit-flex: 3;
+  text-align: center;
+}
+
+#menu-container {
+  position: absolute;
+  height: 60%;
+  right: 20%;
+  bottom: 15%;
+  box-sizing: border-box;
 }
 
 .color-menu,
 .photo-menu,
 .paint-menu,
 .about-menu {
-  display: -webkit-flex;
-  display: flex;
-  height: 50%;
-  width: 50%;
-  border: .3em solid white;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  justify-content: center;
+  position: relative;
+  display: inline-block;
   color: white;
-  font-size: 2.4em;
+  font-size: 2em;
   font-family: "Lucida Grande", "Helvetica Nueue", Arial, sans-serif;
+  vertical-align: top;
   box-sizing: border-box;
+}
+.color-menu span,
+.photo-menu span,
+.paint-menu span,
+.about-menu span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.color-menu,
+.about-menu {
+  width: 60%;
+  height: 40%;
+}
+
+.photo-menu,
+.paint-menu {
+  width: 40%;
+  height: 60%;
+}
+
+.color-menu:before,
+.photo-menu:before,
+.paint-menu:before,
+.about-menu:before {
+  content: "";
+  position: absolute;
 }
 
 .color-menu {
   background-color: #7ac043;
-  float: left;
+}
+
+.color-menu:before {
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #61ddba;
+}
+
+.color-menu:hover:before {
+  width: 100%;
+  transition: width .4s;
+}
+
+.color-menu:hover i:before {
+  content: "Color";
 }
 
 .photo-menu {
-  margin-left: 50%;
   background-color: #ffd201;
+}
+
+.photo-menu:before {
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: #ffec74;
+}
+
+.photo-menu:hover:before {
+  height: 100%;
+  transition: height .4s;
+}
+
+.photo-menu:hover i:before {
+  content: "Phoro";
 }
 
 .paint-menu {
   background-color: #0482c4;
-  float: left;
+  -webkit-transform: translate(0, -33.33%);
+  transform: translate(0, -33.33%);
+}
+
+.paint-menu:before {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: #56aac4;
+}
+
+.paint-menu:hover:before {
+  height: 100%;
+  transition: height .4s;
+}
+
+.paint-menu:hover i:before {
+  content: "Paint";
 }
 
 .about-menu {
-  margin-left: 50%;
-  background-color: #f89ea4;
+  background-color: #f87899;
+}
+
+.about-menu:before {
+  right: 0;
+  width: 0;
+  height: 100%;
+  background-color: #ee8ff8;
+}
+
+.about-menu:hover:before {
+  width: 100%;
+  transition: width .4s;
+}
+
+.about-menu:hover i:before {
+  content: "About";
 }
 
 /*color*/
@@ -340,6 +445,7 @@ a {
 }
 
 .canvasContainer {
+  position: relative;
   overflow: auto;
 }
 

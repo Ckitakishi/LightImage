@@ -2,18 +2,43 @@ doctype html
 html(lang="en")
   head
     meta(charset='utf-8')
-    title SandPainting
+    title LightImage
     link(rel="Shortcut Icon",href="/public/images/favicon.ico",type="image/x-icon")
     link(href='css/style.css', rel='stylesheet')
+    link(rel="stylesheet", href="/node_modules/font-awesome/css/font-awesome.min.css")
+    script(src='/node_modules/vue/dist/vue.min.js')
   body#index
+    .title
+      span LightImage
     .menu
-      a(href='/color', class='color-menu')
-        span ANALYSIS COLOR
-      a(href='/photo', class='photo-menu')
-        span PHOTO
-      a(href='/paint', class='paint-menu')
-        span PAINT
-      a(href='/about', class='about-menu')
-        span ABOUT
-    div.title
-      span 毕业设计题目
+      #menu-container(v-style='width: w + "px"')
+        a(href='/color', class='color-menu')
+          span
+            i(class="fa fa-area-chart")
+        a(href='/photo', class='photo-menu')
+          span
+            i(class="fa fa-image")
+        a(href='/paint', class='paint-menu')
+          span
+            i(class="fa fa-pencil")
+        a(href='/about', class='about-menu')
+          span
+            i(class="fa fa-info")
+    script.
+      new Vue({
+        el: '#index',
+        data: {
+          w: 0
+        },
+        computed: {
+          w: function () {
+            return document.getElementById("menu-container").offsetHeight;
+          }
+        }
+      })
+    script.
+      // TODO: 优化
+      window.onresize = function () {
+        var container = document.getElementById("menu-container");
+        container.style.width = container.offsetHeight + "px";
+      }

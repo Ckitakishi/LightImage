@@ -435,8 +435,8 @@ new Vue({
 
     //--------------------------图像处理--------------------------
 
-    cut: function () {
-      
+    crop: function () {
+
     },
     sizing: function () {
       if (!this.initial) {

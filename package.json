@@ -1,24 +1,25 @@
 {
-  "name": "sand-painting",
+  "name": "LightImage",
   "version": "0.0.1",
-  "description": "sand",
-  "main": "index.js",
+  "description": "a light image tool",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ckitakishi/sand-painting.git"
+    "url": "https://github.com/Ckitakishi/LightImage.git"
   },
   "author": "@chen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Ckitakishi/sand-painting/issues"
+    "url": "https://github.com/Ckitakishi/LightImage/issues"
   },
-  "homepage": "https://github.com/Ckitakishi/sand-painting",
+  "homepage": "https://github.com/Ckitakishi/LightImage",
   "dependencies": {
     "ejs": "^2.3.1",
     "express": "^4.12.3",
+    "font-awesome": "^4.3.0",
     "jade": "^1.9.2",
     "jquery": "^2.1.3",
     "serve-favicon": "^2.2.0",

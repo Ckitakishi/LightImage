@@ -4,6 +4,7 @@ include header
     include components/upload/template
     include components/back/template
     include components/modal/template
+    include components/crop/template
     #photo
       .displayphoto(v-show='isLoad')
         modal-component(v-with='modalTitle: "Set Sizing"', v-if='modalShow')
@@ -23,7 +24,7 @@ include header
             div(v-on='click: red')
           li.dir
             p 处理
-            div(v-on='click: cut') 剪裁
+            div(v-on='click: crop') 剪裁
             div(v-on='click: sizing') 尺寸调整
           li.dir
             p 旋转与对称
@@ -40,4 +41,5 @@ include header
         .canvasContainer
           image#preview(src='{{preview}}', v-show='canvasShow')
           canvas#myCanvas(style='display: none') Sorry
+          #crop(v-if='canvasShow', v-component='crop-component')
     script(src='js/photo.js')
