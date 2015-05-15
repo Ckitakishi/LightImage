@@ -21,7 +21,8 @@ include header
           li.dir
             p 颜色
             div(v-on='click: green') green
-            div(v-on='click: red')
+            div(v-on='click: red') red
+            div(v-on='click: sepia') sepia
           li.dir
             p 处理
             div(v-on='click: crop') 剪裁
@@ -39,7 +40,8 @@ include header
         button#save(v-show='isLoad', v-on='click: save') Save Image
         upload-component
         .canvasContainer
-          image#preview(src='{{preview}}', v-show='canvasShow')
+          image#preview(src='{{preview}}', v-show='canvasShow',draggable="false")
           canvas#myCanvas(style='display: none') Sorry
-          #crop(v-if='canvasShow', v-component='crop-component')
+          div(v-if='cropBox', v-component='crop-component')
+        canvas#histogram
     script(src='js/photo.js')

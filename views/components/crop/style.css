@@ -1,0 +1,46 @@
+#crop {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  border: 1px solid #0482c4;
+  box-sizing: border-box;
+}
+
+.right-top,
+.left-top,
+.left-bottom,
+.right-bottom {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  box-sizing: border-box;
+}
+
+.right-top {
+  right: 0;
+  border-bottom: 1px solid #0482c4;
+  border-left: 1px solid #0482c4;
+  cursor: ne-resize;
+}
+
+.left-top {
+  border-right: 1px solid #0482c4;
+  border-bottom: 1px solid #0482c4;
+  cursor: nw-resize;
+}
+
+.left-bottom {
+  bottom: 0;
+  border-top: 1px solid #0482c4;
+  border-right: 1px solid #0482c4;
+  cursor: sw-resize;
+}
+
+.right-bottom {
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid #0482c4;
+  border-left: 1px solid #0482c4;
+  cursor: se-resize;
+}

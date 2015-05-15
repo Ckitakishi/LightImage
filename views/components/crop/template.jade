@@ -1,6 +1,12 @@
 script(type="text/x-template", id="temp-crop")
-  .rightTop
-  .leftTop
-  .leftBottom
-  .rightBottom
+  #crop(v-style='width: width + "px",' +
+  'height: height + "px",' +
+  'top: top + "px",' +
+  'right: right + "px", ' +
+  'bottom: bottom + "px",' +
+  'left: left + "px"', v-on='mousedown: dragStart($event), mouseup: dragEnd')
+    .right-top
+    .left-top(v-on='mousedown: leftTopDown')
+    .left-bottom
+    .right-bottom
 

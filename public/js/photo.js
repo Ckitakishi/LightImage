@@ -13,12 +13,16 @@ new Vue({
     imageHeight: 0,
     modalShow: false,
     sourceImage: {},
-    preview: ""
+    preview: "",
+    cropBox: false
   },
   created: function() {
     console.log("create");
   },
   methods: {
+    /**
+     * 创建并初始化Canvas
+     */
     initCanvas: function () {
       var self = this;
       var canvas = document.getElementById("myCanvas");
@@ -45,6 +49,10 @@ new Vue({
       self.canvas = canvas;
       self.initial = true;
     },
+    /**
+     * 创建并初始化Canvas
+     * @param  {Object} info 弹出Modal的类型
+     */
     save: function () {
       var self = this;
       self.modalShow = true;
@@ -54,6 +62,12 @@ new Vue({
       setTimeout(function () {
         self.$broadcast("openModal", info);
       },50);
+    },
+    /**
+     * 生成直方图
+     */
+    histogram : function () {
+
     },
     normlize: function (kernel) {
       var len = kernel.length;
@@ -436,7 +450,11 @@ new Vue({
     //--------------------------图像处理--------------------------
 
     crop: function () {
-
+      if (!this.initial) {
+        this.initCanvas();
+      }
+      this.cropBox = true;
+      this.$broadcast("imageHide");
     },
     sizing: function () {
       if (!this.initial) {
@@ -453,6 +471,60 @@ new Vue({
       setTimeout(function () {
         self.$broadcast("openModal", info);
       },50);
+
+      this.$broadcast("imageHide");
+    },
+    green: function () {
+      if (!this.initial) {
+        this.initCanvas();
+      }
+      var canvasData = this.canvasData;
+      var data = canvasData.data;
+      var r, g, b, a;
+
+      var output = this.ctx.createImageData(canvasData.width, canvasData.height);
+      var outputData = output.data;
+
+      for (var i = 0, len = data.length; i < len; i+=4) {
+        r = data[i];
+        g = data[i + 1];
+        b = data[i + 2];
+        a = data[i + 3];
+
+        outputData[i] = 0;
+        outputData[i + 1] = (r + g + b) / 3;
+        outputData[i + 2] = 0;
+        outputData[i + 3] = a;
+      }
+      this.ctx.putImageData(output, 0, 0);
+      this.preview = this.canvas.toDataURL();
+
+      this.$broadcast("imageHide");
+    },
+    sepia: function () {
+      if (!this.initial) {
+        this.initCanvas();
+      }
+      var canvasData = this.canvasData;
+      var data = canvasData.data;
+      var r, g, b, a;
+
+      var output = this.ctx.createImageData(canvasData.width, canvasData.height);
+      var outputData = output.data;
+
+      for (var i = 0, len = data.length; i < len; i+=4) {
+        r = data[i];
+        g = data[i + 1];
+        b = data[i + 2];
+        a = data[i + 3];
+
+        outputData[i]     = (r * 0.393)+(g * 0.769)+(b * 0.189);
+        outputData[i + 1] = (r * 0.349)+(g * 0.686)+(b * 0.168);
+        outputData[i + 2] = (r * 0.272)+(g * 0.534)+(b * 0.131);
+        outputData[i + 3] = a;
+      }
+      this.ctx.putImageData(output, 0, 0);
+      this.preview = this.canvas.toDataURL();
 
       this.$broadcast("imageHide");
     }
