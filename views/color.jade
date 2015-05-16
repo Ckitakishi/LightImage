@@ -14,6 +14,12 @@ include header
           label.color-block(v-style='background-color: "rgb(" + r + "," + g + "," + b + ")"')
           label(v-text='pixelColor')
       .displaycolor
+        .histogram(v-if='isLoad')
+          canvas#histogram
+          span 直方图
+        .histogram(v-if='isLoad')
+          canvas#histogram-equal
+          span 直方图均衡化
         ul.color-frequency
           li(v-repeat='pixel: curPixels | sort') rgb({{pixel.r}},{{pixel.g}},{{pixel.b}}) -- {{pixel.n}}
             div.color-strip(v-style='background-color: "rgb(" + pixel.r + "," + pixel.g + "," + pixel.b + ")", width: pixel.n/topWidth + "%"')

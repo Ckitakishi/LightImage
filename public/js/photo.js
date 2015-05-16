@@ -63,12 +63,6 @@ new Vue({
         self.$broadcast("openModal", info);
       },50);
     },
-    /**
-     * 生成直方图
-     */
-    histogram : function () {
-
-    },
     normlize: function (kernel) {
       var len = kernel.length;
       var normal = new Array(len);

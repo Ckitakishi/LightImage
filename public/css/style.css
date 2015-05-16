@@ -67,6 +67,11 @@ a {
   box-sizing: border-box;
 }
 
+#upload button:focus,
+#paint-tool button:focus {
+  outline: none;
+}
+
 #photo #upload form {
   display: inline-block;
 }
@@ -505,6 +510,21 @@ a {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.histogram {
+  display: inline-block;
+  margin: 1em;
+}
+
+.histogram span {
+  display: block;
+  text-align: center;
+}
+
+#histogram,
+#histogram-equal {
+  margin: 1em;
 }
 
 /*paint*/

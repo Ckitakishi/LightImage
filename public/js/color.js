@@ -69,6 +69,7 @@ new Vue({
 
       this.$broadcast("imageHide");
       this.colorInfo(canvas, ctx);
+      this.histogram(canvas, ctx);
     },
     pixelInfo: function (e) {
       if (this.hasImage) {
@@ -160,6 +161,104 @@ new Vue({
       }
 
       self.colorsLen = self.curPixels.length;
+    },
+    /**
+     * 生成直方图
+     */
+    histogram : function (canvas, ctx) {
+      var histogramCanvas = document.getElementById("histogram");
+      var hisCtx = histogramCanvas.getContext("2d");
+
+      var canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      var data = canvasData.data;
+      var r, g, b;
+      var grayArr = [];
+
+      // 灰度的统计
+      for (var i = 0, len = data.length; i < len; i+=4) {
+        r = data[i];
+        g = data[i + 1];
+        b = data[i + 2];
+
+        var gray = Math.round(.299 * r + .587 * g + .114 * b);
+        if (grayArr[gray]) {
+          grayArr[gray] ++;
+        } else {
+          grayArr[gray] = 1;
+        }
+      }
+
+      // 找到最大值，考虑优化
+      var hisWidth = histogramCanvas.width,
+        hisHeight = histogramCanvas.height;
+      var max = 0;
+      grayArr.forEach(function (ele) {
+        if (ele > max) {
+          max = ele;
+        }
+      });
+
+      var fre = hisHeight / max;
+
+      // 绘制直方图
+      var y;
+      hisCtx.beginPath();
+      grayArr.forEach(function (ele, index) {
+        if (ele) {
+          y = hisHeight - ele * fre;
+        } else {
+          y = 0;
+        }
+        hisCtx.moveTo(index, hisHeight);
+        hisCtx.lineTo(index, y);
+        hisCtx.stroke();
+      });
+      hisCtx.closePath();
+
+      var dataLen = data.length / 4;
+      this.histogramEqual(grayArr, dataLen);
+    },
+    histogramEqual: function(grayArr, dataLen) {
+      var cdfMin = grayArr[0] || 0;
+      var cdf = 0, h;
+      var equalArr = [];
+      grayArr.forEach(function (ele) {
+        cdf += ele;
+        h = Math.round(((cdf - cdfMin) / (dataLen - cdfMin)) * 255);
+        if (equalArr[h]) {
+          equalArr[h] += ele;
+        } else {
+          equalArr[h] = ele;
+        }
+      });
+
+      var max = 0;
+      equalArr.forEach(function (ele) {
+        if (ele > max) {
+          max = ele;
+        }
+      });
+
+      // 绘制直方图均衡化后
+      var equalCanvas = document.getElementById("histogram-equal");
+      var equalCtx = equalCanvas.getContext("2d");
+      var equalWidth = equalCanvas.width,
+        equalHeight = equalCanvas.height;
+      var y;
+      var fre = equalHeight / max;
+
+      equalCtx.beginPath();
+      equalArr.forEach(function (ele, index) {
+        if (ele) {
+          y = equalHeight - ele * fre;
+        } else {
+          y = 0;
+        }
+        equalCtx.moveTo(index, equalHeight);
+        equalCtx.lineTo(index, y);
+        equalCtx.stroke();
+      });
+      equalCtx.closePath();
     }
   },
   events: {
