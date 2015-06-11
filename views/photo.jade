@@ -1,10 +1,10 @@
 include header
   block title
     title Photo
-    include components/upload/template
-    include components/back/template
-    include components/modal/template
-    include components/crop/template
+    include ../components/upload/template
+    include ../components/back/template
+    include ../components/modal/template
+    include ../components/crop/template
     #photo
       .displayphoto(v-show='isLoad')
         modal-component(v-with='modalTitle: "Set Sizing"', v-if='modalShow')
@@ -25,8 +25,8 @@ include header
             div(v-on='click: sepia') sepia
           li.dir
             p 处理
-            div(v-on='click: crop') 剪裁
-            div(v-on='click: sizing') 尺寸调整
+            div(v-on='click: crop') crop
+            div(v-on='click: sizing') resize
           li.dir
             p 旋转与对称
             div(v-on='click: hSymmetry') Horizontal Symmetry

@@ -80,9 +80,6 @@ Vue.component('modal-component', {
         self.whRatio = result.width / result.height;
         self.sizing = true;
       }
-    },
-    imageInfo: function (imageInfo) {
-
     }
   }
 });

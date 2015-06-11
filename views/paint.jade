@@ -1,7 +1,7 @@
 include header
   block title
     title Paint
-    include components/back/template
+    include ../components/back/template
     #paint(v-on='mouseup: drawPathEnd')
       #paint-tool(v-class='load-enter: !isLoad, load-leave: isLoad')
         back-component

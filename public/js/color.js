@@ -21,14 +21,17 @@ new Vue({
   filters: {
     sort: function (colors) {
 
+      //function compare(v1, v2) {
+      //  if (v1.n < v2.n) {
+      //    return 1;
+      //  } else if (v1.n > v2.n) {
+      //    return -1;
+      //  } else {
+      //    return 0;
+      //  }
+      //}
       function compare(v1, v2) {
-        if (v1.n < v2.n) {
-          return 1;
-        } else if (v1.n > v2.n) {
-          return -1;
-        } else {
-          return 0;
-        }
+        return v2.n - v1.n;
       }
       if (colors.length > 0) {
         colors.sort(compare);
@@ -54,7 +57,7 @@ new Vue({
 
       if (image.style.display === "none") {
         console.log("请上传图片");
-        return;
+        return;s
       }
 
       this.canvasShow = true;
@@ -202,6 +205,8 @@ new Vue({
 
       // 绘制直方图
       var y;
+      hisCtx.strokeStyle = "gray";
+      hisCtx.lineWidth = hisWidth / 256;
       hisCtx.beginPath();
       grayArr.forEach(function (ele, index) {
         if (ele) {
@@ -209,8 +214,8 @@ new Vue({
         } else {
           y = 0;
         }
-        hisCtx.moveTo(index, hisHeight);
-        hisCtx.lineTo(index, y);
+        hisCtx.moveTo(index * hisCtx.lineWidth, hisHeight);
+        hisCtx.lineTo(index * hisCtx.lineWidth, y);
         hisCtx.stroke();
       });
       hisCtx.closePath();
@@ -247,6 +252,8 @@ new Vue({
       var y;
       var fre = equalHeight / max;
 
+      equalCtx.strokeStyle = "gray";
+      equalCtx.lineWidth = equalWidth / 256;
       equalCtx.beginPath();
       equalArr.forEach(function (ele, index) {
         if (ele) {
@@ -254,8 +261,8 @@ new Vue({
         } else {
           y = 0;
         }
-        equalCtx.moveTo(index, equalHeight);
-        equalCtx.lineTo(index, y);
+        equalCtx.moveTo(index * equalCtx.lineWidth, equalHeight);
+        equalCtx.lineTo(index * equalCtx.lineWidth, y);
         equalCtx.stroke();
       });
       equalCtx.closePath();

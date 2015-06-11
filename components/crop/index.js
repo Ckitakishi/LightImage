@@ -48,18 +48,18 @@ Vue.component('crop-component', {
       var nwResize = function(e) {
         self.resizeNarrow(e);
       };
-      var test = function (e) {
+      var nwZoom = function (e) {
         self.resizeZoom(e);
       };
       self.$el.addEventListener("mousemove", nwResize, false);
-      preview.addEventListener("mousemove", test, false);
+      preview.addEventListener("mousemove", nwZoom, false);
       //self.$el.addEventListener("mouseup", function () {
       //  self.$el.removeEventListener("mousemove", test, false);
       //});
       // TODO: 暂时先设为windows
       window.addEventListener("mouseup", function () {
         self.$el.removeEventListener("mousemove", nwResize, false);
-        preview.removeEventListener("mousemove", test, false);
+        preview.removeEventListener("mousemove", nwZoom, false);
         self.downPos = "";
       });
     },
@@ -103,6 +103,19 @@ Vue.component('crop-component', {
       var self = this;
       var crop = document.getElementById("crop");
       crop.removeEventListener("mousemove", self.dragCrop, false);
+    },
+    crop: function() {
+      var crop = document.getElementById("crop");
+      var cropWidth = crop.offsetWidth;
+      var cropHeight = crop.offsetHeight;
+
+      var cropInfo = {
+        left: this.left,
+        top: this.top,
+        width: cropWidth,
+        height: cropHeight
+      };
+      this.$dispatch("startCrop", cropInfo);
     }
   }
 });

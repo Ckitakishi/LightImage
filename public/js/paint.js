@@ -113,13 +113,15 @@ new Vue({
         self.ctx.moveTo(self.curPoint.x, self.curPoint.y);
         self.ctx.lineTo(px, py);
         self.ctx.stroke();
-        self.ctx.closePath();
         self.curPoint.x = px;
         self.curPoint.y = py;
       }
     },
     drawPathEnd: function() {
       this.drawing = false;
+      if (!this.drawPixel) {
+        this.ctx.closePath();
+      }
     },
     drawPathAbort: function () {
       //this.drawing = false;
@@ -217,7 +219,7 @@ new Vue({
         self.ctx.fillRect(cx, cy, self.multiple, self.multiple);
 
         self.curPoint.x = px;
-        self.curPoint.y = py;
+        self.curPoint.y = py;ti
       }
     }
   }

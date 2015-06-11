@@ -42,6 +42,9 @@ Vue.component('upload-component', {
   events: {
     imageHide: function () {
       this.imgShow = false;
+    },
+    modifySource: function (source) {
+      this.src = source;
     }
   }
 });

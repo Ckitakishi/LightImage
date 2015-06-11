@@ -550,6 +550,22 @@ new Vue({
         console.log("错误处理");
       }
       this.modalShow = false;
+    },
+    startCrop: function(cropInfo) {
+      var image = document.getElementById("image-source");
+      var preview = document.getElementById("preview");
+      var fre = this.canvas.width / preview.width;
+
+      this.canvas.height = fre * cropInfo.height;
+      this.canvas.width = fre * cropInfo.width;
+      preview.height = preview.width / cropInfo.width * cropInfo.height;
+      this.ctx.drawImage(image, cropInfo.left * fre, cropInfo.top * fre, cropInfo.width * fre, cropInfo.height * fre, 0,0, this.canvas.width, this.canvas.height);
+      this.preview = this.canvas.toDataURL();
+
+      // hide cropBox
+      this.cropBox = false;
+      // modify the source
+      this.$broadcast("modifySource", this.preview);
     }
   }
 });

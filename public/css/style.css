@@ -129,6 +129,7 @@ a {
   align-items: flex-start;
   -webkit-justify-content: center;
   justify-content: center;
+  z-index: 1;
 }
 
 .modal {
@@ -190,6 +191,7 @@ a {
   position: absolute;
   top: 0;
   border: 1px solid #0482c4;
+  background-color: rgba(0, 0, 0, .2);
   box-sizing: border-box;
   cursor: move;
 }
@@ -236,7 +238,7 @@ a {
 #index {
   display: -webkit-flex;
   display: flex;
-  background: url("../images/background.gif") no-repeat center center fixed;
+  background: url("../images/background.jpg") no-repeat center center fixed;
   background-size: cover;
 }
 
