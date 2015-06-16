@@ -57,7 +57,7 @@ new Vue({
 
       if (image.style.display === "none") {
         console.log("请上传图片");
-        return;s
+        return;
       }
 
       this.canvasShow = true;
@@ -99,6 +99,85 @@ new Vue({
         } else {
           return (col - col % 51) / 51 + 1;
         }
+      }
+
+      // convert RGB to HSL
+      function convertToHSL(rr, gg, bb) {
+        var cMax, cMin, delta;
+        var h, s, l;
+        if (rr >= gg) {
+          cMax = rr;
+          cMin = gg;
+        } else {
+          cMax = gg;
+          cMin = rr;
+        }
+        if (cMax >= bb) {
+          if (cMin > bb) {
+            cMin = bb;
+          }
+        } else {
+          cMax = bb;
+        }
+
+        // 浮点数计算bug。
+        delta = (cMax * 100 - cMin * 100) / 100;
+        if (delta === 0) {
+          h = 0;
+        } else if (cMax === rr) {
+          h = 60 * (((gg - bb) / delta) % 6);
+        } else if (cMax === gg) {
+          h = 60 * (((bb - rr) / delta) + 2);
+        } else if (cMax === bb) {
+          h = 60 * (((rr - gg) / delta) + 4);
+        }
+        h = Math.floor(h);
+
+        l = (cMax + cMin) / 2;
+
+        if (delta === 0) {
+          s = 0;
+        } else {
+          s = delta * 100 / (100 - Math.abs(2 * l - 1) * 100);
+        }
+        s = Math.floor(s * 100);
+        l = Math.floor(l * 100);
+        return "hsl(" + h.toString() + "º," + s.toString() + "%," + l.toString() + "%)";
+      }
+
+      function convertToCMYK(rr, gg, bb) {
+        var cMax;
+        var c, m, y, k;
+        if (rr >= gg) {
+          cMax = rr;
+        } else {
+          cMax = gg;
+        }
+        if (cMax < bb) {
+          cMax = bb;
+        }
+
+        // 浮点数计算bug。
+        k = (100 - cMax * 100) / 100;
+        if (k === 1) {
+          c = 0;
+          m = 0;
+          y = 0;
+        } else {
+          c = (1 - rr - k) / (1 - k);
+          m = (1 - gg - k) / (1 - k);
+          y = (1 - bb - k) / (1 - k);
+          if (c !== 0) {
+            c = c.toFixed(1);
+          }
+          if (m !== 0) {
+            m = m.toFixed(1);
+          }
+          if (y !== 0) {
+            y = y.toFixed(1);
+          }
+        }
+        return "cmyk(" + c.toString() + "," + m.toString() + "," + y.toString() + "," + k.toString() + ")";
       }
 
       var canvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -159,6 +238,8 @@ new Vue({
           curPixel.g = Math.floor((i % 36) / 6) * 51;
           curPixel.b = ((i % 36) % 6) * 51;
           curPixel.n = self.pixels[i];
+          curPixel.hsl = convertToHSL(curPixel.r / 255, curPixel.g / 255, curPixel.b / 255);
+          curPixel.cmyk = convertToCMYK(curPixel.r / 255, curPixel.g / 255, curPixel.b / 255);
           self.curPixels.push(curPixel);
         }
       }
