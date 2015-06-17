@@ -221,7 +221,7 @@ new Vue({
         self.ctx.fillRect(cx, cy, self.multiple, self.multiple);
 
         self.curPoint.x = px;
-        self.curPoint.y = py;ti
+        self.curPoint.y = py;
       }
     }
   }

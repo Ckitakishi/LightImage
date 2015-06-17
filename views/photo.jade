@@ -37,7 +37,9 @@ include header
       #upload(v-class='load-enter: !isLoad, load-leave: isLoad')
         back-component
         header PHOTO
-        button#save(v-show='isLoad', v-on='click: save') Save Image
+        button.tool-btn(v-show='isLoad', v-on='click: saveCur') Save
+        button.tool-btn(v-show='isLoad', v-on='click: restore') Restore
+        button.tool-btn(v-show='isLoad', v-on='click: save') Save Image
         upload-component
         .canvasContainer
           image#preview(src='{{preview}}', v-show='canvasShow',draggable="false")

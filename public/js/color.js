@@ -167,14 +167,20 @@ new Vue({
           c = (1 - rr - k) / (1 - k);
           m = (1 - gg - k) / (1 - k);
           y = (1 - bb - k) / (1 - k);
-          if (c !== 0) {
-            c = c.toFixed(1);
+          if (c > 0) {
+            c = c.toFixed(2);
+          } else {
+            c = 0;
           }
-          if (m !== 0) {
-            m = m.toFixed(1);
+          if (m > 0) {
+            m = m.toFixed(2);
+          }else {
+            m = 0;
           }
-          if (y !== 0) {
-            y = y.toFixed(1);
+          if (y > 0) {
+            y = y.toFixed(2);
+          }else {
+            y = 0;
           }
         }
         return "cmyk(" + c.toString() + "," + m.toString() + "," + y.toString() + "," + k.toString() + ")";
@@ -227,7 +233,7 @@ new Vue({
         }
       }
       self.pixelsLen = len/4;
-      ctx.putImageData(canvasData, 0, 0); // at coords 0,0
+      //ctx.putImageData(canvasData, 0, 0); // at coords 0,0
 
       var curPixel = {};
       self.curPixels = [];

@@ -21,7 +21,11 @@ include header
           canvas#histogram-equal
           span 直方图均衡化
         ul.color-frequency
-          li(v-repeat='pixel: curPixels | sort') rgb({{pixel.r}},{{pixel.g}},{{pixel.b}}) -- {{pixel.hsl}} -- {{pixel.cmyk}}
+          li(v-repeat='pixel: curPixels | sort')
+            .color-info
+              span rgb({{pixel.r}},{{pixel.g}},{{pixel.b}})
+              span {{pixel.hsl}}
+              span {{pixel.cmyk}}
             div.color-strip(v-style='background-color: "rgb(" + pixel.r + "," + pixel.g + "," + pixel.b + ")", width: pixel.n/topWidth + "%"')
     //footer @Ckitakishi
     script(src='js/color.js')

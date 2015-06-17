@@ -14,7 +14,8 @@ new Vue({
     modalShow: false,
     sourceImage: {},
     preview: "",
-    cropBox: false
+    cropBox: false,
+    saved: false
   },
   created: function() {
     console.log("create");
@@ -43,7 +44,9 @@ new Vue({
 
       self.ctx = canvas.getContext("2d");
       self.ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-      self.canvasData = self.ctx.getImageData(0, 0, canvas.width, canvas.height);
+      if (!self.saved) {
+        self.canvasData = self.ctx.getImageData(0, 0, canvas.width, canvas.height);
+      }
 
       self.preview = canvas.toDataURL();
       self.canvas = canvas;
@@ -62,6 +65,15 @@ new Vue({
       setTimeout(function () {
         self.$broadcast("openModal", info);
       },50);
+    },
+    saveCur: function () {
+      var self = this;
+      var canvas = document.getElementById("myCanvas");
+      self.canvasData = self.ctx.getImageData(0, 0, canvas.width, canvas.height);
+      self.saved = true;
+    },
+    restore: function () {
+      this.initCanvas();
     },
     normlize: function (kernel) {
       var len = kernel.length;

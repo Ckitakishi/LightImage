@@ -1,4 +1,4 @@
-/*! LightImage - v0.0.1 - 2015-06-16 */
+/*! LightImage - v0.0.1 - 2015-06-17 */
 Vue.component('back-component', {
   template: '#temp-back',
   data: function () {

@@ -449,6 +449,17 @@ a {
   padding: .5em 1em;
 }
 
+.color-info {
+  margin: .5em 0 1em;
+}
+
+.color-info span {
+  padding: .5em;
+  margin-right: .5em;
+  border: 1px solid #7AC043;
+  border-radius: 16px;
+}
+
 .color-strip {
   height: 1.4em;
   box-sizing: border-box;
@@ -496,14 +507,14 @@ a {
   overflow: auto;
 }
 
-#save {
+.tool-btn {
   display: inline-block;
   position: relative;
   bottom: 30px;
-  margin: 0 1em;
+  margin-right: 1em;
 }
 
-#save:focus {
+.tool-btn:focus {
   outline: none;
 }
 
